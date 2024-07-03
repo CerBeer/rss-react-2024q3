@@ -19,7 +19,8 @@
   },
   "lint-staged": {
     "src/**/*.{js,ts,tsx,scss,css,json}": "prettier --write",
-    "src/**/*.{js,ts,tsx}": "eslint --fix --max-warnings=0"
+    "src/**/*.{js,ts,tsx}": "eslint --fix --max-warnings=0",
+    "*.{ts,tsx}": "eslint --cache --fix"
   },
   "dependencies": {
     "react": "^18.3.1",
