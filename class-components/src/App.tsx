@@ -1,10 +1,12 @@
-import { useState } from "react";
-import viteLogo from "public/vite.svg";
+// import { useState } from "react";
+// eslint-disable-next-line import/no-absolute-path
+import viteLogo from "/vite.svg";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
+import Counter from "./components/counter";
 
 function App() {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
 
   return (
     <>
@@ -18,12 +20,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button
-          type="button"
-          onClick={() => setCount((count_new) => count_new + 1)}
-        >
-          count is {count}
-        </button>
+        <Counter title="count is" />
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

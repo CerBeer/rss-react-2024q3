@@ -31,9 +31,13 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    'react/react-in-jsx-scope': 0,
-    "react/jsx-props-no-spreading": "off",
-    "react/require-default-props": "off",
+    "react/static-property-placement": ["warn", "property assignment", {
+      childContextTypes: "static getter",
+      contextTypes: "static public field",
+      contextType: "static public field",
+      displayName: "static public field",
+      defaultProps: "static public field",
+    }],
   },
   settings: {
     "import/resolver": {
