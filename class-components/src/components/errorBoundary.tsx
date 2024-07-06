@@ -1,8 +1,8 @@
 import { Component, ErrorInfo, ReactNode } from "react";
-import "./errorBoundary.css";
 
 type ErrorBoundaryState = {
   hasError: boolean;
+  errorMessage: string;
   errorInfo: string;
 };
 
@@ -13,19 +13,14 @@ type ErrorBoundaryProps = {
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false, errorInfo: "" };
+    this.state = { hasError: false, errorMessage: "", errorInfo: "" };
     this.handleClick = this.handleClick.bind(this);
   }
 
-  static getDerivedStateFromError(): ErrorBoundaryState {
-    return { hasError: true, errorInfo: "" };
-  }
-
-  componentDidCatch(_error: Error, info: ErrorInfo) {
+  componentDidCatch(error: Error, info: ErrorInfo) {
     const errorInfo = info.componentStack ?? "";
-    if (errorInfo) {
-      this.setState({ hasError: true, errorInfo });
-    }
+    const errorMessage = error.message;
+    this.setState({ hasError: true, errorMessage, errorInfo });
   }
 
   handleClick = () => {
@@ -33,12 +28,12 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   };
 
   render() {
-    const { hasError, errorInfo } = this.state;
+    const { hasError, errorMessage, errorInfo } = this.state;
     const { children } = this.props;
     if (hasError) {
       return (
         <div className="error-boundary">
-          <div className="error-boundary-head">Something went wrong...</div>
+          <div className="error-boundary-head">{errorMessage}</div>
           <div className="error-boundary-body">{errorInfo}</div>
           <button type="button" onClick={this.handleClick}>
             Fix this error
@@ -47,7 +42,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
       );
     }
 
-    return <>this.props.children{children}</>;
+    return <> {children}</>;
   }
 }
 

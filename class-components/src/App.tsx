@@ -1,40 +1,57 @@
-import viteLogo from "./assets/vite.svg";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
-import Counter from "./components/counter";
-import Clock from "./components/clock";
+import { Component } from "react";
+import SearchInput from "./components/searchInput";
+import Spinner from "./components/spinner";
 import ErrorButton from "./components/errorButton";
+import Result from "./components/result";
 import ErrorBoundary from "./components/errorBoundary";
+import { getPeopleList } from "./api/swapi";
+import { Peoples } from "./api/swapiTypes";
 
-function App() {
-  // const [count, setCount] = useState(0);
+type State = {
+  nowQuery: boolean;
+  peopleList: Peoples;
+};
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+type Props = {
+  title?: string;
+};
+
+class App extends Component<Props, State> {
+  static defaultProps = {
+    title: "Search for Star Wars person or character",
+  };
+
+  constructor(props: Props) {
+    super(props);
+    this.state = { nowQuery: false, peopleList: [] };
+    this.handleSearchClick = this.handleSearchClick.bind(this);
+    this.updateState = this.updateState.bind(this);
+  }
+
+  updateState = (state: State) => {
+    this.setState(state);
+  };
+
+  handleSearchClick = (request: string) => {
+    this.setState({ nowQuery: true });
+    getPeopleList(request, this.updateState);
+  };
+
+  render() {
+    const { title } = this.props;
+    const { nowQuery, peopleList } = this.state;
+    return (
       <ErrorBoundary>
-        <h1>Vite + React</h1>
-        <div className="card">
-          <Counter title="count is" />
-          <Clock title="It is" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to test HMR
-          </p>
-        </div>
-        <p className="read-the-docs">
-          Click on the Vite and React logos to learn more
-        </p>
         <ErrorButton />
+        <div className="title">
+          <h1>{title}</h1>
+        </div>
+        <SearchInput handle={this.handleSearchClick} />
+        {nowQuery ? <Spinner /> : <Result peopleList={peopleList} />}
       </ErrorBoundary>
-    </>
-  );
+    );
+  }
 }
 
 export default App;

@@ -1,7 +1,7 @@
 import { Component } from "react";
 
 type State = {
-  count: number;
+  error: boolean;
 };
 
 type ErrorProps = {
@@ -15,24 +15,28 @@ class ErrorButton extends Component<ErrorProps, State> {
 
   constructor(props: ErrorProps) {
     super(props);
-    this.state = { count: 0 };
+    this.state = { error: false };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick = () => {
-    this.setState(({ count }) => ({ count: count + 1 }));
+    this.setState({ error: true });
   };
 
   render() {
     const { title } = this.props;
-    const { count } = this.state;
-    if (count > 0) {
-      throw new Error("Oops, I made a mistake!");
+    const { error } = this.state;
+    if (error) {
+      throw new Error("Something went wrong...");
     }
 
     return (
-      <button type="button" onClick={this.handleClick}>
-        {title} {count}
+      <button
+        type="button"
+        className="button-throw-error"
+        onClick={this.handleClick}
+      >
+        {title}
       </button>
     );
   }
