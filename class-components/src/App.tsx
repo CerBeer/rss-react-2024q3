@@ -1,9 +1,10 @@
-// import { useState } from "react";
-// eslint-disable-next-line import/no-absolute-path
-import viteLogo from "/vite.svg";
+import viteLogo from "./assets/vite.svg";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Counter from "./components/counter";
+import Clock from "./components/clock";
+import ErrorButton from "./components/errorButton";
+import ErrorBoundary from "./components/errorBoundary";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -18,16 +19,20 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <Counter title="count is" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+      <ErrorBoundary>
+        <h1>Vite + React</h1>
+        <div className="card">
+          <Counter title="count is" />
+          <Clock title="It is" />
+          <p>
+            Edit <code>src/App.tsx</code> and save to test HMR
+          </p>
+        </div>
+        <p className="read-the-docs">
+          Click on the Vite and React logos to learn more
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+        <ErrorButton />
+      </ErrorBoundary>
     </>
   );
 }

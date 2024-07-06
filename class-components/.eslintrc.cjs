@@ -12,7 +12,7 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts', 'coverage'],
   parser: '@typescript-eslint/parser',
@@ -24,6 +24,7 @@ module.exports = {
   },
   plugins: ['react-refresh', "react",
     "@typescript-eslint",
+    "react-compiler",
     "prettier"
   ],
   rules: {
@@ -31,6 +32,8 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    "@typescript-eslint/no-explicit-any": "error",
+    "react-compiler/react-compiler": "error",
     "react/static-property-placement": ["warn", "property assignment", {
       childContextTypes: "static getter",
       contextTypes: "static public field",
