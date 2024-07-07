@@ -34,7 +34,9 @@ class App extends Component<Props, State> {
 
   handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const { request, lastRequest } = this.state;
+    let { request } = this.state;
+    request = request.trim();
+    const { lastRequest } = this.state;
     if (request === lastRequest) return;
     this.setState({ lastRequest: request });
     localStorage.setItem("previousRequest", JSON.stringify(request));
