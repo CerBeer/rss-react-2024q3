@@ -1,5 +1,5 @@
 import { PureComponent } from "react";
-import { Character } from "./swapiTypes";
+import { Character } from "../api/swapiTypes";
 
 type Props = {
   character: Character;

@@ -1,6 +1,6 @@
 import { PureComponent } from "react";
 import { People } from "../api/swapiTypes";
-import { SwapiCard } from "../api/swapiCard";
+import { SwapiCard } from "./swapiCard";
 
 type Props = {
   people: People;
@@ -20,7 +20,7 @@ class Result extends PureComponent<Props> {
     return (
       <div className="search-result">
         {people.map((character) => (
-          <SwapiCard key={`p${character.name}`} character={character} />
+          <SwapiCard key={character.renderKey} character={character} />
         ))}
       </div>
     );

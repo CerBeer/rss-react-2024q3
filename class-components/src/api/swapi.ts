@@ -34,6 +34,10 @@ export async function getPeople(
       const result: People = [];
       return result;
     });
+  resultFetch.forEach((character) => {
+    const currentCharacter = character;
+    currentCharacter.renderKey = `p${character.name}`;
+  });
   setState({ nowQuery: false, people: resultFetch });
 }
 

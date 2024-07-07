@@ -1,4 +1,5 @@
 export type Character = {
+  renderKey: string;
   birth_year: string;
   eye_color: string;
   films: string[];
