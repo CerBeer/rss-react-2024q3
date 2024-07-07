@@ -5,17 +5,25 @@ type State = {
   peopleList: Peoples;
 };
 
-const baseURL = "https://swapi.dev/api/people/?page=1&format=json";
+const baseURL = `${import.meta.env.VITE_API_URL_BASE}${import.meta.env.VITE_API_URL_SECTION}`;
+
+function getQueryURL(page: string, format: string, request: string | null) {
+  let queryURL = `${baseURL}?${import.meta.env.VITE_API_URL_PAGE}=${page}`;
+  queryURL = `${queryURL}&${import.meta.env.VITE_API_URL_FORMAT}=${format}`;
+  if (request) queryURL = `${queryURL}&search=${request}`;
+  return queryURL;
+}
 
 export async function getPeopleList(
-  request: string,
   setState: (state: State) => void,
+  request: string,
+  page = "1",
+  format = "json",
 ) {
   const options = {
     method: "GET",
   };
-  let queryURL = baseURL;
-  if (request) queryURL = `${queryURL}&search=${request}`;
+  const queryURL = getQueryURL(page, format, request);
   const resultFetch = await fetch(queryURL, options)
     .then((answer) => answer.json())
     .then((answer: PeoplesAnswer) => {

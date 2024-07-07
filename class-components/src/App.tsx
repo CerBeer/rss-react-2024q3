@@ -35,7 +35,7 @@ class App extends Component<Props, State> {
 
   handleSearchClick = (request: string) => {
     this.setState({ nowQuery: true });
-    getPeopleList(request, this.updateState);
+    getPeopleList(this.updateState, request);
   };
 
   render() {
