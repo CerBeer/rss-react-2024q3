@@ -1,14 +1,15 @@
 import { PureComponent } from "react";
-import { Peoples } from "../api/swapiTypes";
+import { People } from "../api/swapiTypes";
+import { SwapiCard } from "../api/swapiCard";
 
 type Props = {
-  peopleList: Peoples;
+  people: People;
 };
 
 class Result extends PureComponent<Props> {
   render() {
-    const { peopleList } = this.props;
-    if (!peopleList.length)
+    const { people } = this.props;
+    if (!people.length)
       return (
         <div className="search-result">
           <div className="cart">
@@ -18,16 +19,8 @@ class Result extends PureComponent<Props> {
       );
     return (
       <div className="search-result">
-        {peopleList.map((people) => (
-          <div className="cart" key={`p${people.name}`}>
-            <div className="cart-name">{people.name}</div>
-            <div className="cart-gender">gender: {people.gender}</div>
-            <div className="cart-birth-year">
-              birth year: {people.birth_year}
-            </div>
-            <div className="cart-height">height: {people.height}</div>
-            <div className="cart-mass">mass: {people.mass}</div>
-          </div>
+        {people.map((character) => (
+          <SwapiCard key={`p${character.name}`} character={character} />
         ))}
       </div>
     );

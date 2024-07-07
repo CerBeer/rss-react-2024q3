@@ -5,12 +5,12 @@ import Spinner from "./components/spinner";
 import ErrorButton from "./components/errorButton";
 import Result from "./components/result";
 import ErrorBoundary from "./components/errorBoundary";
-import { getPeopleList } from "./api/swapi";
-import { Peoples } from "./api/swapiTypes";
+import { getPeople } from "./api/swapi";
+import { People } from "./api/swapiTypes";
 
 type State = {
   nowQuery: boolean;
-  peopleList: Peoples;
+  people: People;
 };
 
 type Props = {
@@ -24,7 +24,7 @@ class App extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = { nowQuery: false, peopleList: [] };
+    this.state = { nowQuery: false, people: [] };
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.updateState = this.updateState.bind(this);
   }
@@ -35,12 +35,12 @@ class App extends Component<Props, State> {
 
   handleSearchClick = (request: string) => {
     this.setState({ nowQuery: true });
-    getPeopleList(this.updateState, request);
+    getPeople(this.updateState, request);
   };
 
   render() {
     const { title } = this.props;
-    const { nowQuery, peopleList } = this.state;
+    const { nowQuery, people } = this.state;
     return (
       <ErrorBoundary>
         <ErrorButton />
@@ -48,7 +48,7 @@ class App extends Component<Props, State> {
           <h1>{title}</h1>
         </div>
         <SearchInput handle={this.handleSearchClick} />
-        {nowQuery ? <Spinner /> : <Result peopleList={peopleList} />}
+        {nowQuery ? <Spinner /> : <Result people={people} />}
       </ErrorBoundary>
     );
   }

@@ -36,6 +36,7 @@ class App extends Component<Props, State> {
     e.preventDefault();
     let { request } = this.state;
     request = request.trim();
+    this.setState({ request });
     const { lastRequest } = this.state;
     if (request === lastRequest) return;
     this.setState({ lastRequest: request });

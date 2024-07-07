@@ -1,8 +1,8 @@
-import { Peoples, PeoplesAnswer } from "./swapiTypes";
+import { People, PeopleAnswer } from "./swapiTypes";
 
 type State = {
   nowQuery: boolean;
-  peopleList: Peoples;
+  people: People;
 };
 
 const baseURL = `${import.meta.env.VITE_API_URL_BASE}${import.meta.env.VITE_API_URL_SECTION}`;
@@ -14,7 +14,7 @@ function getQueryURL(page: string, format: string, request: string | null) {
   return queryURL;
 }
 
-export async function getPeopleList(
+export async function getPeople(
   setState: (state: State) => void,
   request: string,
   page = "1",
@@ -26,15 +26,15 @@ export async function getPeopleList(
   const queryURL = getQueryURL(page, format, request);
   const resultFetch = await fetch(queryURL, options)
     .then((answer) => answer.json())
-    .then((answer: PeoplesAnswer) => {
-      const result: Peoples = answer.results ?? [];
+    .then((answer: PeopleAnswer) => {
+      const result: People = answer.results ?? [];
       return result;
     })
     .catch(() => {
-      const result: Peoples = [];
+      const result: People = [];
       return result;
     });
-  setState({ nowQuery: false, peopleList: resultFetch });
+  setState({ nowQuery: false, people: resultFetch });
 }
 
-export default getPeopleList;
+export default getPeople;

@@ -1,4 +1,4 @@
-export type People = {
+export type Character = {
   birth_year: string;
   eye_color: string;
   films: string[];
@@ -17,11 +17,11 @@ export type People = {
   vehicles: string[];
 };
 
-export type Peoples = People[];
+export type People = Character[];
 
-export type PeoplesAnswer = {
+export type PeopleAnswer = {
   count: number;
   next: string | null;
   previous: string | null;
-  results: Peoples;
+  results: People;
 };
