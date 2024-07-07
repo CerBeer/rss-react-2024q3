@@ -49,6 +49,7 @@ class App extends Component<Props, State> {
     return (
       <form className="search-query" method="post" onSubmit={this.handleSubmit}>
         <input
+          data-testid="search-query-input"
           className="search-query-input"
           name="searchQuery"
           value={request}
