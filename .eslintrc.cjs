@@ -41,6 +41,13 @@ module.exports = {
       displayName: "static public field",
       defaultProps: "static public field",
     }],
+    "react/jsx-no-bind": ["warn", {
+      "ignoreDOMComponents": false,
+      "ignoreRefs": false,
+      "allowArrowFunctions": true,
+      "allowFunctions": true,
+      "allowBind":false
+    }],
   },
   settings: {
     "import/resolver": {

@@ -1,45 +1,23 @@
-import { Component } from "react";
+import { useEffect, useState } from "react";
 
-type State = {
-  error: boolean;
-};
+function ErrorButton() {
+  const [error, setError] = useState(false);
 
-type ErrorProps = {
-  title?: string;
-};
-
-class ErrorButton extends Component<ErrorProps, State> {
-  static defaultProps = {
-    title: "Throw Error",
+  const handleClick = () => {
+    setError(true);
   };
 
-  constructor(props: ErrorProps) {
-    super(props);
-    this.state = { error: false };
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick = () => {
-    this.setState({ error: true });
-  };
-
-  render() {
-    const { title } = this.props;
-    const { error } = this.state;
+  useEffect(() => {
     if (error) {
       throw new Error("Something went wrong...");
     }
+  }, [error]);
 
-    return (
-      <button
-        type="button"
-        className="button-throw-error"
-        onClick={this.handleClick}
-      >
-        {title}
-      </button>
-    );
-  }
+  return (
+    <button type="button" className="button-throw-error" onClick={handleClick}>
+      Throw Error
+    </button>
+  );
 }
 
 export default ErrorButton;

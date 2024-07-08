@@ -1,57 +1,48 @@
 import "./App.css";
-import { Component } from "react";
+import { useEffect, useState } from "react";
 import SearchInput from "./components/searchInput";
 import Spinner from "./components/spinner";
 import ErrorButton from "./components/errorButton";
 import Result from "./components/result";
 import ErrorBoundary from "./components/errorBoundary";
 import { getPeople } from "./api/swapi";
-import { People } from "./api/swapiTypes";
+import { People, Character } from "./api/swapiTypes";
 
 type State = {
   nowQuery: boolean;
   people: People;
 };
 
-type Props = {
-  title?: string;
-};
+function App() {
+  const [nowQuery, setNowQuery] = useState(false);
+  const [people, setPeople] = useState(new Array<Character>());
 
-class App extends Component<Props, State> {
-  static defaultProps = {
-    title: "Search for Star Wars person or character",
-  };
-
-  constructor(props: Props) {
-    super(props);
-    this.state = { nowQuery: false, people: [] };
-    this.handleSearchClick = this.handleSearchClick.bind(this);
-    this.updateState = this.updateState.bind(this);
+  function updateState(state: State) {
+    setNowQuery(state.nowQuery);
+    setPeople(state.people);
   }
 
-  updateState = (state: State) => {
-    this.setState(state);
-  };
-
-  handleSearchClick = (request: string) => {
-    this.setState({ nowQuery: true });
-    getPeople(this.updateState, request);
-  };
-
-  render() {
-    const { title } = this.props;
-    const { nowQuery, people } = this.state;
-    return (
-      <ErrorBoundary>
-        <ErrorButton />
-        <div className="title">
-          <h1>{title}</h1>
-        </div>
-        <SearchInput handle={this.handleSearchClick} />
-        {nowQuery ? <Spinner /> : <Result people={people} />}
-      </ErrorBoundary>
-    );
+  function handleSearchClick(request: string) {
+    setNowQuery(true);
+    getPeople(updateState, request);
   }
+
+  useEffect(() => {
+    const savedRequest = localStorage.getItem("previousRequest") ?? "";
+    setNowQuery(true);
+    getPeople(updateState, savedRequest);
+  }, []);
+
+  return (
+    <ErrorBoundary>
+      <ErrorButton />
+      <div className="title">
+        <h1>Search for Star Wars person or character</h1>
+      </div>
+      <SearchInput handle={handleSearchClick} />
+      {nowQuery ? <Spinner /> : <Result people={people} />}
+    </ErrorBoundary>
+  );
 }
 
 export default App;
