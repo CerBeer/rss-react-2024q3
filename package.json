@@ -15,7 +15,7 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "npx vitest --coverage",
-    "prepare": "cd .. && npx husky class-components/.husky"
+    "prepare": "husky install"
   },
   "lint-staged": {
     "src/**/*.{js,ts,tsx,scss,css,json}": "prettier --write",

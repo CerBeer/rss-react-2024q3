@@ -1,3 +1,2 @@
-cd class-components
 npm run test:run
 npx lint-staged --concurrent false --config .lintstaged/pre-commit
