@@ -8,10 +8,10 @@ import ErrorBoundary from "./components/errorBoundary";
 import { getPeople } from "./api/swapi";
 import { People, Character } from "./api/swapiTypes";
 
-type State = {
+interface State {
   nowQuery: boolean;
   people: People;
-};
+}
 
 function App() {
   const [nowQuery, setNowQuery] = useState(false);
@@ -24,13 +24,13 @@ function App() {
 
   function handleSearchClick(request: string) {
     setNowQuery(true);
-    getPeople(updateState, request);
+    void getPeople(updateState, request);
   }
 
   useEffect(() => {
     const savedRequest = localStorage.getItem("previousRequest") ?? "";
     setNowQuery(true);
-    getPeople(updateState, savedRequest);
+    void getPeople(updateState, savedRequest);
   }, []);
 
   return (

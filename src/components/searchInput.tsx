@@ -1,8 +1,8 @@
 import { useState, FormEvent } from "react";
 
-type Props = {
+interface Props {
   handle: (query: string) => void;
-};
+}
 
 function SearchInput({ handle }: Props) {
   const savedRequest = localStorage.getItem("previousRequest") ?? "";

@@ -1,9 +1,9 @@
 import { People, PeopleAnswer } from "./swapiTypes";
 
-type State = {
+interface State {
   nowQuery: boolean;
   people: People;
-};
+}
 
 const baseURL = `${import.meta.env.VITE_API_URL_BASE}${import.meta.env.VITE_API_URL_SECTION}`;
 

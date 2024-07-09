@@ -1,4 +1,4 @@
-export type Character = {
+export interface Character {
   renderKey: string;
   birth_year: string;
   eye_color: string;
@@ -16,13 +16,13 @@ export type Character = {
   starships: string[];
   url: string;
   vehicles: string[];
-};
+}
 
 export type People = Character[];
 
-export type PeopleAnswer = {
+export interface PeopleAnswer {
   count: number;
   next: string | null;
   previous: string | null;
   results: People;
-};
+}

@@ -1,8 +1,8 @@
 import { Character } from "../api/swapiTypes";
 
-type Props = {
+interface Props {
   character: Character;
-};
+}
 
 function SwapiCard({ character }: Props) {
   if (!character)

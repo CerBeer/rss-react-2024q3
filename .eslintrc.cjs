@@ -7,6 +7,8 @@ module.exports = {
     "airbnb/hooks",
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-type-checked',
+    'plugin:@typescript-eslint/stylistic-type-checked',
     'plugin:react-hooks/recommended',
     "plugin:react/recommended",
     'plugin:jsx-a11y/recommended',
@@ -48,6 +50,7 @@ module.exports = {
       "allowFunctions": true,
       "allowBind":false
     }],
+    "no-void": ["error", { "allowAsStatement": true }],
   },
   settings: {
     "import/resolver": {

@@ -1,9 +1,9 @@
 import { People } from "../api/swapiTypes";
 import SwapiCard from "./swapiCard";
 
-type Props = {
+interface Props {
   people: People;
-};
+}
 
 function Result({ people }: Props) {
   const peopleNow = people;
