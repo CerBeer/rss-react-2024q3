@@ -1,10 +1,10 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import SearchInput from "./components/searchInput";
-import Spinner from "./components/spinner";
-import ErrorButton from "./components/errorButton";
-import Result from "./components/result";
-import ErrorBoundary from "./components/errorBoundary";
+import SearchInput from "./components/searchInput/searchInput";
+import Spinner from "./components/spinner/spinner";
+import ErrorButton from "./components/errorButton/errorButton";
+import Result from "./components/result/result";
+import ErrorBoundary from "./components/errorBoundary/errorBoundary";
 import { getPeople } from "./api/swapi";
 import { People, Character } from "./api/swapiTypes";
 

@@ -1,5 +1,5 @@
-import { People } from "../api/swapiTypes";
-import SwapiCard from "./swapiCard";
+import { People } from "../../api/swapiTypes";
+import SwapiCard from "../swapiCard/swapiCard";
 
 interface Props {
   people: People;

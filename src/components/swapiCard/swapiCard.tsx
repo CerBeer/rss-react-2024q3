@@ -1,4 +1,4 @@
-import { Character } from "../api/swapiTypes";
+import { Character } from "../../api/swapiTypes";
 
 interface Props {
   character: Character;
