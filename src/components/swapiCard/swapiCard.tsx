@@ -1,10 +1,18 @@
+import { Params, useLoaderData } from "react-router-dom";
 import { Character } from "../../api/swapiTypes";
+import { getCharacter } from "../../api/swapi";
 
-interface Props {
-  character: Character;
+export async function loader({
+  params,
+}: {
+  params: Params<"id">;
+}): Promise<Character> {
+  const contact = await getCharacter(params.id ?? "");
+  return contact;
 }
 
-function SwapiCard({ character }: Props) {
+function SwapiCard() {
+  const character = useLoaderData() as Character;
   if (!character)
     return (
       <div className="card">

@@ -1,11 +1,34 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { People } from "../../api/swapiTypes";
-import SwapiCard from "../swapiCard/swapiCard";
+import ErrorPage from "../../routes/errorPage";
+import Cards from "../../routes/cards";
+import SwapiCard, { loader as characterLoader } from "../swapiCard/swapiCard";
 
 interface Props {
   people: People;
 }
 
 function Result({ people }: Props) {
+  function loader(): People {
+    return people;
+  }
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Cards />,
+      errorElement: <ErrorPage />,
+      loader,
+      children: [
+        {
+          path: "character/:id",
+          element: <SwapiCard />,
+          loader: characterLoader,
+        },
+      ],
+    },
+  ]);
+
   const peopleNow = people;
   if (!peopleNow.length)
     return (
@@ -17,9 +40,7 @@ function Result({ people }: Props) {
     );
   return (
     <div className="search-result">
-      {peopleNow.map((character) => (
-        <SwapiCard key={character.renderKey} character={character} />
-      ))}
+      <RouterProvider router={router} />
     </div>
   );
 }
