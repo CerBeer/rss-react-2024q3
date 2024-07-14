@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, it, vi, beforeEach, expect } from "vitest";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Card from "../components/card/card";
@@ -61,5 +62,23 @@ describe("Card", () => {
     expect(screen.getByText(mockCharacter.name)).toBeInTheDocument();
     expect(screen.getByAltText("character")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /X/i })).toBeInTheDocument();
+  });
+
+  it("close Card", async () => {
+    render(
+      <MemoryRouter initialEntries={["/page/1/card/elementId"]}>
+        <Routes>
+          <Route path="/page/1/card/:elementId" element={<Card />} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => expect(mockFetch).toHaveBeenCalled());
+
+    const closeButton = screen.getByRole("button", { name: /X/i });
+    expect(closeButton).toBeInTheDocument();
+
+    await userEvent.setup().click(closeButton);
+    expect(screen.queryByText("Test Character")).not.toBeInTheDocument();
   });
 });

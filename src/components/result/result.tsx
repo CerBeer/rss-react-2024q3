@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { People } from "../../api/swapiTypes";
 import Item from "../item/item";
-import Pagination from "../paginations/paginations";
+import Pagination from "../pagination/pagination";
 
 interface Props {
   totalItem: number;
@@ -54,7 +54,11 @@ function Result({ people, totalItem }: Props) {
 
   return (
     <>
-      <div className="search-result" onClick={closeCard}>
+      <div
+        className="search-result"
+        data-testid="search-result"
+        onClick={closeCard}
+      >
         <div className="search-result-list">
           {peopleNow.map((character) => (
             <Item key={character.renderKey} character={character} />

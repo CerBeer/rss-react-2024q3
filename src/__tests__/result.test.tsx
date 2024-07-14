@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { BrowserRouter } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
+import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import Result from "../components/result/result";
 import { People } from "../api/swapiTypes";
 
@@ -34,6 +35,17 @@ describe("Result", () => {
       </BrowserRouter>,
     );
 
+    expect(screen.getByText("Test Character")).toBeInTheDocument();
+  });
+
+  it("close test result", async () => {
+    render(
+      <MemoryRouter initialEntries={["/page/1/card/1/?search="]}>
+        <Result people={mockPeople} totalItem={1} />
+      </MemoryRouter>,
+    );
+
+    await userEvent.setup().click(screen.getByTestId("search-result"));
     expect(screen.getByText("Test Character")).toBeInTheDocument();
   });
 });

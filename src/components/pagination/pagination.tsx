@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from "react-router-dom";
-import "./paginations.css";
+import "./pagination.css";
 
 const elementsPerPage = 10;
 
