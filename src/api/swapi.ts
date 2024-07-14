@@ -1,15 +1,21 @@
 import { People, PeopleAnswer, Character } from "./swapiTypes";
 
 interface State {
-  nowQuery: boolean;
+  request: string;
   people: People;
+  totalItem: number;
+}
+
+interface StateCard {
+  nowQuery: boolean;
+  character?: Character;
 }
 
 const baseURL = `${import.meta.env.VITE_API_URL_BASE}${import.meta.env.VITE_API_URL_SECTION}`;
 
-function getQueryURL(page: string, format: string, request: string | null) {
+function getQueryURL(page: string, request: string | null) {
   let queryURL = `${baseURL}?${import.meta.env.VITE_API_URL_PAGE}=${page}`;
-  queryURL = `${queryURL}&${import.meta.env.VITE_API_URL_FORMAT}=${format}`;
+  queryURL = `${queryURL}`;
   if (request) queryURL = `${queryURL}&search=${request}`;
   return queryURL;
 }
@@ -23,40 +29,44 @@ export async function getPeople(
   setState: (state: State) => void,
   request: string,
   page = "1",
-  format = "json",
 ) {
   const options = {
     method: "GET",
   };
-  const queryURL = getQueryURL(page, format, request);
+  const queryURL = getQueryURL(page, request);
   const resultFetch = await fetch(queryURL, options)
     .then((answer) => answer.json())
     .then((answer: PeopleAnswer) => {
-      const result: People = answer.results ?? [];
+      const result = {
+        request,
+        people: answer.results ?? [],
+        totalItem: answer.count ?? 0,
+      };
       return result;
     })
     .catch(() => {
-      const result: People = [];
+      const result = {
+        request,
+        people: [],
+        totalItem: 0,
+      };
       return result;
     });
-  resultFetch.forEach((character) => {
+  resultFetch.people.forEach((character) => {
     const currentCharacter = character;
     const urlParts = character.url.split("/");
     currentCharacter.id = urlParts[urlParts.length - 2];
     currentCharacter.renderKey = `p${character.name}`;
   });
-  setState({ nowQuery: false, people: resultFetch });
+  // console.log("resultFetch", resultFetch);
+  setState(resultFetch);
 }
 
-export async function getPeopleNew(
-  request: string,
-  page = "1",
-  format = "json",
-) {
+export async function getPeopleNew(request: string, page = "1") {
   const options = {
     method: "GET",
   };
-  const queryURL = getQueryURL(page, format, request);
+  const queryURL = getQueryURL(page, request);
   const resultFetch = await fetch(queryURL, options)
     .then((answer) => answer.json())
     .then((answer: PeopleAnswer) => {
@@ -76,7 +86,10 @@ export async function getPeopleNew(
   return resultFetch;
 }
 
-export async function getCharacter(id: string) {
+export async function getCharacter(
+  setState: (state: StateCard) => void,
+  id: string,
+) {
   const options = {
     method: "GET",
   };
@@ -85,13 +98,13 @@ export async function getCharacter(id: string) {
     .then((answer) => answer.json())
     .then((answer: Character) => {
       return answer;
+    })
+    .catch(() => {
+      const result = undefined;
+      return result;
     });
-  // .catch(() => {
-  //   const result = undefined;
-  //   return result;
-  // });
   if (resultFetch) resultFetch.id = id;
-  return resultFetch;
+  setState({ nowQuery: false, character: resultFetch });
 }
 
 export default getPeople;

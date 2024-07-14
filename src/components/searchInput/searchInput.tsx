@@ -1,22 +1,17 @@
 import { useState, FormEvent } from "react";
+import { useSearchParams } from "react-router-dom";
 
-interface Props {
-  handle: (query: string) => void;
-}
-
-function SearchInput({ handle }: Props) {
+function SearchInput() {
   const savedRequest = localStorage.getItem("previousRequest") ?? "";
   const [request, setRequest] = useState(savedRequest);
-  const [lastRequest, setLastRequest] = useState(savedRequest);
+  const [, setSearchParams] = useSearchParams();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const requestNew = request.trim();
-    setRequest(requestNew);
-    if (requestNew === lastRequest) return;
-    setLastRequest(requestNew);
+    // setRequest(requestNew);
     localStorage.setItem("previousRequest", requestNew);
-    handle(request);
+    setSearchParams({ search: requestNew });
   }
 
   return (

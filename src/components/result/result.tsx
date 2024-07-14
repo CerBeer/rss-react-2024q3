@@ -1,47 +1,42 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { People } from "../../api/swapiTypes";
-import ErrorPage from "../../routes/errorPage";
-import Cards from "../../routes/cards";
-import SwapiCard, { loader as characterLoader } from "../swapiCard/swapiCard";
+import Item from "../item/item";
+import Pagination from "../pagination/Pagination";
 
 interface Props {
+  totalItem: number;
   people: People;
 }
 
-function Result({ people }: Props) {
-  function loader(): People {
-    return people;
-  }
-
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Cards />,
-      errorElement: <ErrorPage />,
-      loader,
-      children: [
-        {
-          path: "character/:id",
-          element: <SwapiCard />,
-          loader: characterLoader,
-        },
-      ],
-    },
-  ]);
-
+function Result({ people, totalItem }: Props) {
+  const { page } = useParams();
+  const navigate = useNavigate();
   const peopleNow = people;
   if (!peopleNow.length)
     return (
       <div className="search-result">
         <div className="cart">
-          <b>Result is empty</b>
+          <p>
+            <b>Result is empty</b>
+          </p>
+          <button type="button" onClick={() => navigate(-1)}>
+            &larr; Go back
+          </button>
         </div>
       </div>
     );
   return (
-    <div className="search-result">
-      <RouterProvider router={router} />
-    </div>
+    <>
+      <div className="search-result">
+        <div className="search-result-list">
+          {peopleNow.map((character) => (
+            <Item key={character.renderKey} character={character} />
+          ))}
+        </div>
+        <Outlet />
+      </div>
+      <Pagination page={page ?? "1"} totalItem={totalItem} />
+    </>
   );
 }
 
