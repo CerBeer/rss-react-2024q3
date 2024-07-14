@@ -12,9 +12,8 @@ function Pagination({ totalItem, page }: Props) {
   const currenPage = parseInt(page, 10);
   const totalPages = Math.ceil(totalItem / elementsPerPage);
   const [searchParams] = useSearchParams();
-  const search = searchParams.get("search");
-  let searchAdd = "";
-  if (search) searchAdd = `?search=${search}`;
+  const search = searchParams.get("search") ?? "";
+  const searchAdd = `?search=${search}`;
 
   return (
     <div className="pagination">

@@ -1,20 +1,22 @@
 import { useState, FormEvent } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import useLocalStor from "../../hooks/useLocalStor";
 
 function SearchInput() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const [savedSearch, setSavedSearch] = useLocalStor("previousRequest");
+
   let savedRequest = searchParams.get("search");
   if (savedRequest === null) {
-    savedRequest = localStorage.getItem("previousRequest") ?? "";
-    // navigate(`/page/1?search=${savedRequest}`);
+    savedRequest = savedSearch;
   }
   const [request, setRequest] = useState(savedRequest);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const requestNew = request.trim();
-    localStorage.setItem("previousRequest", requestNew);
+    setSavedSearch(requestNew);
     navigate(`/page/1?search=${requestNew}`);
   }
 

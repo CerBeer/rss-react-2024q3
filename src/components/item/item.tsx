@@ -7,9 +7,8 @@ interface Props {
 
 function Item({ character }: Props) {
   const [searchParams] = useSearchParams();
-  const search = searchParams.get("search");
-  let searchAdd = "";
-  if (search) searchAdd = `?search=${search}`;
+  const search = searchParams.get("search") ?? "";
+  const searchAdd = `?search=${search}`;
 
   if (!character)
     return (

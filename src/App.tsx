@@ -7,6 +7,7 @@ import ErrorBoundary from "./components/errorBoundary/errorBoundary";
 import { getPeople } from "./api/swapi";
 import { People, Character } from "./api/swapiTypes";
 import Result from "./components/result/result";
+import useLocalStor from "./hooks/useLocalStor";
 
 interface State {
   request: string;
@@ -20,11 +21,12 @@ function App() {
   const [totalItem, setTotalItem] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
   const { page } = useParams();
+  const [savedSearch] = useLocalStor("previousRequest");
 
   useEffect(() => {
     let search = searchParams.get("search");
     if (search === null) {
-      search = localStorage.getItem("previousRequest") ?? "";
+      search = savedSearch;
       setSearchParams({ search });
     }
   });
@@ -38,11 +40,11 @@ function App() {
   useEffect(() => {
     let search = searchParams.get("search");
     if (search === null) {
-      search = localStorage.getItem("previousRequest") ?? "";
+      search = savedSearch;
     }
     setNowQuery(true);
     void getPeople(updateState, search ?? "", page ?? "1");
-  }, [searchParams, page]);
+  }, [searchParams, page, savedSearch]);
 
   return (
     <ErrorBoundary>
