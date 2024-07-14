@@ -12,7 +12,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext js,ts,tsx --fix",
     "lint:staged": "lint-staged",
-    "test": "vitest",
+    "test": "npx vitest run --coverage",
     "test:run": "vitest run",
     "test:coverage": "npx vitest --coverage",
     "prepare": "husky install"
