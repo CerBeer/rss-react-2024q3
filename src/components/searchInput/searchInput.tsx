@@ -1,16 +1,16 @@
 import { useState, FormEvent } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SearchInput() {
   const savedRequest = localStorage.getItem("previousRequest") ?? "";
   const [request, setRequest] = useState(savedRequest);
-  const [, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const requestNew = request.trim();
     localStorage.setItem("previousRequest", requestNew);
-    setSearchParams({ search: requestNew });
+    navigate(`/page/1?search=${requestNew}`);
   }
 
   return (

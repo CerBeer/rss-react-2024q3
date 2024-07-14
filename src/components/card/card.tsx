@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Character } from "../../api/swapiTypes";
 import { getCharacter } from "../../api/swapi";
 import Spinner from "../spinner/spinner";
@@ -13,10 +13,12 @@ function Card() {
   const { elementId, page } = useParams();
   const [nowQuery, setNowQuery] = useState(false);
   const [character, setCharacter] = useState<Character>();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   function closeCard() {
-    navigate(`/page/${page}`);
+    const search = searchParams.get("search") ?? "";
+    navigate(`/page/${page}?search=${search}`);
   }
 
   function updateState(state: State) {
