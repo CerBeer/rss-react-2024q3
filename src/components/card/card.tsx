@@ -9,6 +9,8 @@ interface State {
   character?: Character;
 }
 
+const baseURL = `${import.meta.env.VITE_IMG_URL_BASE}`;
+
 function Card() {
   const { elementId, page } = useParams();
   const [nowQuery, setNowQuery] = useState(false);
@@ -50,16 +52,33 @@ function Card() {
 
   return (
     <div className="card" data-noclosecard="true">
-      <button type="button" onClick={closeCard} className="card-button-close">
-        X
-      </button>
-      <div className="card-line card-name">{character.name}</div>
-      <div className="card-line card-gender">gender: {character.gender}</div>
-      <div className="card-line card-birth-year">
-        birth year: {character.birth_year}
+      <div className="card-left" data-noclosecard="true">
+        <img
+          src={`${baseURL}${elementId}.jpg`}
+          alt="character"
+          data-noclosecard="true"
+        />
       </div>
-      <div className="card-line card-height">height: {character.height}</div>
-      <div className="card-line card-mass">mass: {character.mass}</div>
+      <div className="card-right" data-noclosecard="true">
+        <button type="button" onClick={closeCard} className="card-button-close">
+          X
+        </button>
+        <div className="card-line card-name" data-noclosecard="true">
+          {character.name}
+        </div>
+        <div className="card-line card-gender" data-noclosecard="true">
+          gender: {character.gender}
+        </div>
+        <div className="card-line card-birth-year" data-noclosecard="true">
+          birth year: {character.birth_year}
+        </div>
+        <div className="card-line card-height" data-noclosecard="true">
+          height: {character.height}
+        </div>
+        <div className="card-line card-mass" data-noclosecard="true">
+          mass: {character.mass}
+        </div>
+      </div>
     </div>
   );
 }
