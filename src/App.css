@@ -124,8 +124,6 @@
   align-content: flex-start;
   align-items: flex-start;
   justify-content: flex-start;
-  /* width: 320px; */
-  /* min-width: 320px; */
   height: fit-content;
   min-height: 400px;
   font-size: x-large;

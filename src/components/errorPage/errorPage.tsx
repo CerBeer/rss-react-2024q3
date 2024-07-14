@@ -2,9 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function ErrorPage() {
   const navigate = useNavigate();
-  // const error = useRouteError() as RouteError;
-  // eslint-disable-next-line no-console
-  // console.error(error);
 
   return (
     <div id="error-page">
