@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import SearchInput from "./components/searchInput/searchInput";
 import Spinner from "./components/spinner/spinner";
 import ErrorBoundary from "./components/errorBoundary/errorBoundary";
@@ -19,6 +19,7 @@ function App() {
   const [people, setPeople] = useState(new Array<Character>());
   const [totalItem, setTotalItem] = useState(0);
   const [searchParams] = useSearchParams();
+  const { page } = useParams();
 
   function updateState(state: State) {
     setNowQuery(false);
@@ -29,8 +30,8 @@ function App() {
   useEffect(() => {
     const search = searchParams.get("search");
     setNowQuery(true);
-    void getPeople(updateState, search ?? "", "1");
-  }, [searchParams]);
+    void getPeople(updateState, search ?? "", page ?? "1");
+  }, [searchParams, page]);
 
   return (
     <ErrorBoundary>

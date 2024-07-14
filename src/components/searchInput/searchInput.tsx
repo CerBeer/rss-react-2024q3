@@ -9,7 +9,6 @@ function SearchInput() {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const requestNew = request.trim();
-    // setRequest(requestNew);
     localStorage.setItem("previousRequest", requestNew);
     setSearchParams({ search: requestNew });
   }
