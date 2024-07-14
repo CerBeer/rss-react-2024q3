@@ -18,7 +18,7 @@ function App() {
   const [nowQuery, setNowQuery] = useState(false);
   const [people, setPeople] = useState(new Array<Character>());
   const [totalItem, setTotalItem] = useState(0);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { page } = useParams();
 
   function updateState(state: State) {
@@ -28,10 +28,14 @@ function App() {
   }
 
   useEffect(() => {
-    const search = searchParams.get("search");
+    let search = searchParams.get("search");
+    if (search === null) {
+      search = localStorage.getItem("previousRequest") ?? "";
+      setSearchParams({ search });
+    }
     setNowQuery(true);
     void getPeople(updateState, search ?? "", page ?? "1");
-  }, [searchParams, page]);
+  }, [searchParams, page, setSearchParams]);
 
   return (
     <ErrorBoundary>

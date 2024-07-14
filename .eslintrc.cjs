@@ -13,7 +13,6 @@ module.exports = {
     "plugin:react/recommended",
     'plugin:jsx-a11y/recommended',
     'plugin:react/jsx-runtime',
-    'plugin:react-hooks/recommended',
     "plugin:prettier/recommended"
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts', 'coverage'],

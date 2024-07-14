@@ -49,7 +49,7 @@ function Card() {
     );
 
   return (
-    <div className="card">
+    <div className="card" data-noclosecard="true">
       <button type="button" onClick={closeCard} className="card-button-close">
         X
       </button>

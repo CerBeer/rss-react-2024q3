@@ -18,15 +18,19 @@ function Item({ character }: Props) {
       </div>
     );
   return (
-    <div className="item">
-      <Link to={`card/${character.id}${searchAdd}`} className="item-button">
-        <div className="item-name">{character.name}</div>
-        <div className="item-gender">gender: {character.gender}</div>
-        <div className="item-birth-year">
+    <Link to={`card/${character.id}${searchAdd}`} className="item-button">
+      <div className="item" data-noclosecard="true">
+        <div className="item-name" data-noclosecard="true">
+          {character.name}
+        </div>
+        <div className="item-gender" data-noclosecard="true">
+          gender: {character.gender}
+        </div>
+        <div className="item-birth-year" data-noclosecard="true">
           birth year: {character.birth_year}
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 }
 export default Item;

@@ -11,9 +11,16 @@ export default function ErrorPage() {
       <h1>404</h1>
       <h2>Oops!</h2>
       <p>Sorry, the page is not found.</p>
-      <button type="button" onClick={() => navigate(-1)}>
-        &larr; Go back
-      </button>
+      <p>
+        <button type="button" onClick={() => navigate(-1)}>
+          &larr; Go back
+        </button>
+      </p>
+      <p>
+        <button type="button" onClick={() => navigate(`/page/1`)}>
+          &larr; Go home
+        </button>
+      </p>
     </div>
   );
 }
