@@ -58,32 +58,7 @@ export async function getPeople(
     currentCharacter.id = urlParts[urlParts.length - 2];
     currentCharacter.renderKey = `p${character.name}`;
   });
-  // console.log("resultFetch", resultFetch);
   setState(resultFetch);
-}
-
-export async function getPeopleNew(request: string, page = "1") {
-  const options = {
-    method: "GET",
-  };
-  const queryURL = getQueryURL(page, request);
-  const resultFetch = await fetch(queryURL, options)
-    .then((answer) => answer.json())
-    .then((answer: PeopleAnswer) => {
-      const result: People = answer.results ?? [];
-      return result;
-    })
-    .catch(() => {
-      const result: People = [];
-      return result;
-    });
-  resultFetch.forEach((character) => {
-    const currentCharacter = character;
-    const urlParts = character.url.split("/");
-    currentCharacter.id = urlParts[urlParts.length - 2];
-    currentCharacter.renderKey = `p${character.name}`;
-  });
-  return resultFetch;
 }
 
 export async function getCharacter(

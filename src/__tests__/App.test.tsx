@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import App from "../App";
 
 /* Header */
-describe("render", () => {
+describe("App", () => {
   it("renders the page Header", () => {
     render(
       <MemoryRouter>
@@ -16,10 +16,7 @@ describe("render", () => {
       screen.queryByText("Search for Star Wars person or character"),
     ).toBeInTheDocument();
   });
-});
 
-/* Search component */
-describe("App component", () => {
   it("renders the page and includes the Search component", () => {
     render(
       <MemoryRouter>

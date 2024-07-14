@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { People } from "../../api/swapiTypes";
 import Item from "../item/item";
-import Pagination from "../pagination/Pagination";
+import Pagination from "../paginations/paginations";
 
 interface Props {
   totalItem: number;
