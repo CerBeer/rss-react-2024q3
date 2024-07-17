@@ -20,7 +20,7 @@ function Card() {
 
   function closeCard() {
     const search = searchParams.get("search") ?? "";
-    navigate(`/page/${page}?search=${search}`);
+    navigate(`/page/${page ?? 1}?search=${search}`);
   }
 
   function updateState(state: State) {

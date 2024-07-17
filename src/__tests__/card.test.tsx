@@ -69,6 +69,7 @@ describe("Card", () => {
       <MemoryRouter initialEntries={["/page/1/card/elementId"]}>
         <Routes>
           <Route path="/page/1/card/:elementId" element={<Card />} />
+          <Route path="/page/1/" element={<div> </div>} />
         </Routes>
       </MemoryRouter>,
     );

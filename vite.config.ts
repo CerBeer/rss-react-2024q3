@@ -12,9 +12,4 @@ export default defineConfig({
   esbuild: process.env.NODE_ENV === 'production' ? {
     drop: ['console', 'debugger'],
   } : {},
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['src/__tests__/setup.ts'],
-  },
 })

@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import ErrorBoundary from "../components/errorBoundary/errorBoundary";
 
@@ -19,6 +19,9 @@ describe("ErrorBoundary", () => {
   });
 
   it("renders error message", () => {
+    const spy = vi.spyOn(console, "error");
+    spy.mockImplementation(() => null);
+
     render(
       <ErrorBoundary>
         <ErrorComponent />
@@ -28,5 +31,7 @@ describe("ErrorBoundary", () => {
     expect(
       screen.getByRole("button", { name: /Fix this error/i }),
     ).toBeInTheDocument();
+
+    spy.mockRestore();
   });
 });
