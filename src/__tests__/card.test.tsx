@@ -76,7 +76,7 @@ describe("Card", () => {
 
     await waitFor(() => expect(mockFetch).toHaveBeenCalled());
 
-    const closeButton = screen.getByRole("button", { name: /X/i });
+    const closeButton = await screen.findByRole("button", { name: /X/i });
     expect(closeButton).toBeInTheDocument();
 
     await userEvent.setup().click(closeButton);
