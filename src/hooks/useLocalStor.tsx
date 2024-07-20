@@ -5,11 +5,11 @@ export default function useLocalStor(valueName: string) {
     return localStorage.getItem(valueName) ?? "";
   }
 
-  const [value, seValue] = useState(initState());
+  const [value, setValue] = useState(initState());
 
   function setNewValue(newValue: string) {
     localStorage.setItem(valueName, newValue);
-    seValue(newValue);
+    setValue(newValue);
   }
 
   return [value, setNewValue] as const;

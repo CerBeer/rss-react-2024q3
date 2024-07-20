@@ -9,6 +9,7 @@ import {
 import { People } from "../../api/swapiTypes";
 import Item from "../item/item";
 import Pagination from "../pagination/pagination";
+import ThemeSwitch from "../themeSwitch/themeSwitch";
 
 interface Props {
   totalItem: number;
@@ -59,6 +60,7 @@ function Result({ people, totalItem }: Props) {
         data-testid="search-result"
         onClick={closeCard}
       >
+        <ThemeSwitch />
         <div className="search-result-list">
           {peopleNow.map((character) => (
             <Item key={character.renderKey} character={character} />
