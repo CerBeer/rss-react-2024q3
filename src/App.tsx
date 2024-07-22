@@ -1,5 +1,5 @@
 import "./App.css";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import SearchInput from "./components/searchInput/searchInput";
 import Spinner from "./components/spinner/spinner";
@@ -19,9 +19,12 @@ function App() {
   let search = searchParams.get("search");
   if (search === null) {
     search = savedSearch;
-    setSearchParams({ search });
   }
   const { data, isFetching } = useGetPeopleQueryString(page, search);
+
+  useEffect(() => {
+    setSearchParams({ search });
+  }, [search, setSearchParams]);
 
   return (
     <ThemeContext.Provider value={themeValue}>
