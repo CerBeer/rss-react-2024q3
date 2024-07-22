@@ -12,15 +12,17 @@ import Pagination from "../pagination/pagination";
 import ThemeSwitch from "../themeSwitch/themeSwitch";
 
 interface Props {
-  totalItem: number;
-  people: People;
+  data: {
+    totalItem: number;
+    people: People;
+  };
 }
 
-function Result({ people, totalItem }: Props) {
+function Result({ data }: Props) {
   const [searchParams] = useSearchParams();
   const { page } = useParams();
   const navigate = useNavigate();
-  const peopleNow = people;
+  const peopleNow = data.people;
 
   function closeCard(e: React.MouseEvent<HTMLDivElement>) {
     const target = e.target as HTMLElement;
@@ -68,7 +70,7 @@ function Result({ people, totalItem }: Props) {
         </div>
         <Outlet />
       </div>
-      <Pagination page={page ?? "1"} totalItem={totalItem} />
+      <Pagination page={page ?? "1"} totalItem={data.totalItem} />
     </>
   );
 }

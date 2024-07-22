@@ -15,6 +15,7 @@ function App() {
   const [savedSearch] = useLocalStor("previousRequest");
   const [theme, setTheme] = useLocalStor("previousTheme");
   const themeValue = useMemo(() => ({ theme, setTheme }), [setTheme, theme]);
+  const emptyData = { totalItem: 0, people: [] };
 
   let search = searchParams.get("search");
   if (search === null) {
@@ -34,11 +35,7 @@ function App() {
             <h1>Search for Star Wars person or character</h1>
           </div>
           <SearchInput />
-          {isFetching ? (
-            <Spinner />
-          ) : (
-            <Result people={data!.people} totalItem={data!.totalItem} />
-          )}
+          {isFetching ? <Spinner /> : <Result data={data ?? emptyData} />}
         </div>
       </ErrorBoundary>
     </ThemeContext.Provider>
