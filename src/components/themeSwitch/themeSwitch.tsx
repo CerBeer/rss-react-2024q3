@@ -15,7 +15,7 @@ function ThemeSwitch() {
       <input
         className="theme-change-input"
         data-noclosecard="true"
-        name="ThemeChange"
+        id="ThemeChange"
         type="checkbox"
         checked={theme === Theme.Dark}
         onChange={(e) => {

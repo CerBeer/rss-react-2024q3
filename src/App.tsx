@@ -1,53 +1,27 @@
 import "./App.css";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import SearchInput from "./components/searchInput/searchInput";
 import Spinner from "./components/spinner/spinner";
 import ErrorBoundary from "./components/errorBoundary/errorBoundary";
-import { getPeople } from "./api/swapi";
-import { People, Character } from "./api/swapiTypes";
 import Result from "./components/result/result";
 import useLocalStor from "./hooks/useLocalStor";
 import { ThemeContext } from "./contexts/theme";
-
-interface State {
-  request: string;
-  people: People;
-  totalItem: number;
-}
+import { useGetPeopleQueryString } from "./redux/services/swapi";
 
 function App() {
-  const [nowQuery, setNowQuery] = useState(false);
-  const [people, setPeople] = useState(new Array<Character>());
-  const [totalItem, setTotalItem] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
   const { page } = useParams();
   const [savedSearch] = useLocalStor("previousRequest");
   const [theme, setTheme] = useLocalStor("previousTheme");
   const themeValue = useMemo(() => ({ theme, setTheme }), [setTheme, theme]);
 
-  useEffect(() => {
-    let search = searchParams.get("search");
-    if (search === null) {
-      search = savedSearch;
-      setSearchParams({ search });
-    }
-  });
-
-  function updateState(state: State) {
-    setNowQuery(false);
-    setPeople(state.people);
-    setTotalItem(state.totalItem);
+  let search = searchParams.get("search");
+  if (search === null) {
+    search = savedSearch;
+    setSearchParams({ search });
   }
-
-  useEffect(() => {
-    let search = searchParams.get("search");
-    if (search === null) {
-      search = savedSearch;
-    }
-    setNowQuery(true);
-    void getPeople(updateState, search ?? "", page ?? "1");
-  }, [searchParams, page, savedSearch]);
+  const { data, isFetching } = useGetPeopleQueryString(page, search);
 
   return (
     <ThemeContext.Provider value={themeValue}>
@@ -57,10 +31,10 @@ function App() {
             <h1>Search for Star Wars person or character</h1>
           </div>
           <SearchInput />
-          {nowQuery ? (
+          {isFetching ? (
             <Spinner />
           ) : (
-            <Result people={people} totalItem={totalItem} />
+            <Result people={data!.people} totalItem={data!.totalItem} />
           )}
         </div>
       </ErrorBoundary>
