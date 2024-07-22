@@ -20,18 +20,20 @@ const mockPeople: People = [
 
 describe("Result", () => {
   it("renders empty Result", () => {
+    const data = { people: [], totalItem: 0 };
     render(
       <BrowserRouter>
-        <Result people={[]} totalItem={0} />
+        <Result data={data} />
       </BrowserRouter>,
     );
     expect(screen.queryByText("Result is empty")).toBeInTheDocument();
   });
 
   it("renders test result", () => {
+    const data = { people: mockPeople, totalItem: 1 };
     render(
       <BrowserRouter>
-        <Result people={mockPeople} totalItem={1} />
+        <Result data={data} />
       </BrowserRouter>,
     );
 
@@ -39,9 +41,10 @@ describe("Result", () => {
   });
 
   it("close test result", async () => {
+    const data = { people: mockPeople, totalItem: 1 };
     render(
       <MemoryRouter initialEntries={["/page/1/card/1/?search="]}>
-        <Result people={mockPeople} totalItem={1} />
+        <Result data={data} />
       </MemoryRouter>,
     );
 
