@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { People } from "../../api/swapiTypes";
+import { People } from "../services/types";
 
 interface PeopleState {
   people: People;

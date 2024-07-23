@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { Character } from "../../api/swapiTypes";
+import { Character } from "../../redux/services/types";
 
 interface Props {
   character: Character;

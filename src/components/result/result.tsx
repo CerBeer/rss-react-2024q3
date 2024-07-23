@@ -6,7 +6,7 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { People } from "../../api/swapiTypes";
+import { People } from "../../redux/services/types";
 import Item from "../item/item";
 import Pagination from "../pagination/pagination";
 import ThemeSwitch from "../themeSwitch/themeSwitch";

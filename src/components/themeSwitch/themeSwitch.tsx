@@ -11,7 +11,11 @@ function ThemeSwitch() {
   }
 
   return (
-    <label htmlFor="ThemeChange" className="theme-change">
+    <label
+      htmlFor="ThemeChange"
+      className="theme-change"
+      data-noclosecard="true"
+    >
       <input
         className="theme-change-input"
         data-noclosecard="true"

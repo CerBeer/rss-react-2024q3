@@ -3,7 +3,7 @@ import { describe, it, expect } from "vitest";
 import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import Item from "../components/item/item";
-import { Character } from "../api/swapiTypes";
+import { Character } from "../redux/services/types";
 
 const mockCharacter: Character = {
   id: "1",

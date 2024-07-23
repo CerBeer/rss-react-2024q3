@@ -3,7 +3,7 @@ import { describe, it, expect } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import Result from "../components/result/result";
-import { People } from "../api/swapiTypes";
+import { People } from "../redux/services/types";
 
 const mockPeople: People = [
   {
