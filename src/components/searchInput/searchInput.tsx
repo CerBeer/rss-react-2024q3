@@ -24,6 +24,7 @@ function SearchInput() {
     <form className="search-query" method="post" onSubmit={handleSubmit}>
       <input
         data-testid="search-query-input"
+        data-noclosecard="true"
         className="search-query-input"
         name="searchQuery"
         value={request}

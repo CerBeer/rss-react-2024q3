@@ -1,11 +1,4 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-import {
-  Outlet,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { People } from "../../redux/services/types";
 import Item from "../item/item";
 import Pagination from "../pagination/pagination";
@@ -19,19 +12,9 @@ interface Props {
 }
 
 function Result({ data }: Props) {
-  const [searchParams] = useSearchParams();
   const { page } = useParams();
   const navigate = useNavigate();
   const peopleNow = data.people;
-
-  function closeCard(e: React.MouseEvent<HTMLDivElement>) {
-    const target = e.target as HTMLElement;
-    if (target.dataset.noclosecard) return;
-    const startLocation = window.location.href;
-    if (!startLocation.includes("/card/")) return;
-    const search = searchParams.get("search") ?? "";
-    navigate(`/page/${page}?search=${search}`);
-  }
 
   if (!peopleNow.length)
     return (
@@ -57,11 +40,7 @@ function Result({ data }: Props) {
 
   return (
     <>
-      <div
-        className="search-result"
-        data-testid="search-result"
-        onClick={closeCard}
-      >
+      <div className="search-result" data-testid="search-result">
         <ThemeSwitch />
         <div className="search-result-list">
           {peopleNow.map((character) => (
