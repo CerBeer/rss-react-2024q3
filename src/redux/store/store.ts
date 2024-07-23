@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { swApi } from "../services/swapi";
-// import peopleReducer from "./peopleSlice";
+import checkedReducer from "./checkedSlice";
 
 const store = configureStore({
   reducer: {
     [swApi.reducerPath]: swApi.reducer,
+    checkedSlice: checkedReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(swApi.middleware),

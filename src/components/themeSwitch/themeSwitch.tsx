@@ -17,7 +17,7 @@ function ThemeSwitch() {
       data-noclosecard="true"
     >
       <input
-        className="theme-change-input"
+        className="change-input"
         data-noclosecard="true"
         id="ThemeChange"
         type="checkbox"

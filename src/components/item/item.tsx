@@ -1,5 +1,6 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { Character } from "../../redux/services/types";
+import Checked from "./checked";
 
 interface Props {
   character: Character;
@@ -7,15 +8,16 @@ interface Props {
 
 function Item({ character }: Props) {
   const [searchParams] = useSearchParams();
-  const search = searchParams.get("search") ?? "";
-  const searchAdd = `?search=${search}`;
-
   if (!character)
     return (
       <div className="item">
         <b>Result is empty</b>
       </div>
     );
+
+  const search = searchParams.get("search") ?? "";
+  const searchAdd = `?search=${search}`;
+
   return (
     <Link to={`card/${character.id}${searchAdd}`} className="item-button">
       <div className="item" data-noclosecard="true">
@@ -29,6 +31,7 @@ function Item({ character }: Props) {
           birth year: {character.birth_year}
         </div>
       </div>
+      <Checked character={character} className="item-checked-change" title="" />
     </Link>
   );
 }
