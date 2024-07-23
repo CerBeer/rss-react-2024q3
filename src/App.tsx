@@ -7,7 +7,7 @@ import ErrorBoundary from "./components/errorBoundary/errorBoundary";
 import Result from "./components/result/result";
 import useLocalStor from "./hooks/useLocalStor";
 import { ThemeContext } from "./contexts/theme";
-import { useGetPeopleQueryString } from "./redux/services/swapi";
+import { useGetPeopleQuery } from "./redux/services/swapi";
 
 function App() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,7 +21,8 @@ function App() {
   if (search === null) {
     search = savedSearch;
   }
-  const { data, isFetching } = useGetPeopleQueryString(page, search);
+
+  const { data, isFetching } = useGetPeopleQuery({ page, search });
 
   useEffect(() => {
     setSearchParams({ search });

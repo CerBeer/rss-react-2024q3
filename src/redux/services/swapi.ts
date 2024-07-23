@@ -4,12 +4,18 @@ import type { PeopleAnswer, Character, State } from "./types";
 
 const baseUrl = `${import.meta.env.VITE_API_URL_BASE}${import.meta.env.VITE_API_URL_SECTION}`;
 
+export interface SearchParam {
+  page: string | undefined;
+  search: string | undefined;
+}
+
 export const swApi = createApi({
   reducerPath: "swApi",
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
-    getPeople: builder.query<State, string>({
-      query: (searchString) => `${searchString}`,
+    getPeople: builder.query<State, SearchParam>({
+      query: (param: SearchParam) =>
+        `?page=${param.page ?? "1"}&search=${param.search ?? ""}`,
       transformResponse: (response: PeopleAnswer) => {
         const result = {
           people: response.results ?? [],
@@ -31,11 +37,3 @@ export const swApi = createApi({
 });
 
 export const { useGetPeopleQuery, useGetCharacterByIdQuery } = swApi;
-
-export function useGetPeopleQueryString(
-  page: string | undefined,
-  search: string,
-) {
-  const newSearchParams = `?page=${page ?? "1"}&search=${search ?? ""}`;
-  return useGetPeopleQuery(newSearchParams);
-}
