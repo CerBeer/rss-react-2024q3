@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { Character } from "../../redux/services/types";
-import Checked from "./checked";
+import Checked from "../checked/checked";
 
 interface Props {
   character: Character;
@@ -31,7 +31,12 @@ function Item({ character }: Props) {
           birth year: {character.birth_year}
         </div>
       </div>
-      <Checked character={character} className="item-checked-change" title="" />
+      <Checked
+        character={character}
+        className="item-checked-change"
+        title=""
+        idPrefix="item"
+      />
     </Link>
   );
 }

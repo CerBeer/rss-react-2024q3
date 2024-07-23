@@ -1,6 +1,7 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Spinner from "../spinner/spinner";
 import { useGetCharacterByIdQuery } from "../../redux/services/swapi";
+import Checked from "../checked/checked";
 
 const baseURL = `${import.meta.env.VITE_IMG_URL_BASE}`;
 
@@ -41,6 +42,12 @@ function Card() {
         />
       </div>
       <div className="card-right" data-noclosecard="true">
+        <Checked
+          character={data}
+          className="character-checked-change"
+          title="Select"
+          idPrefix="card"
+        />
         <button type="button" onClick={closeCard} className="card-button-close">
           X
         </button>

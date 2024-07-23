@@ -1,8 +1,15 @@
-// Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { PeopleAnswer, Character, State } from "./types";
 
 const baseUrl = `${import.meta.env.VITE_API_URL_BASE}${import.meta.env.VITE_API_URL_SECTION}`;
+
+function prepareCharacter(character: Character) {
+  const currentCharacter = character;
+  const urlParts = character.url.split("/");
+  currentCharacter.id = urlParts[urlParts.length - 2];
+  currentCharacter.renderKey = `p${character.name}`;
+  return currentCharacter;
+}
 
 export interface SearchParam {
   page: string | undefined;
@@ -21,17 +28,16 @@ export const swApi = createApi({
           people: response.results ?? [],
           totalItem: response.count ?? 0,
         };
-        result.people.forEach((character) => {
-          const currentCharacter = character;
-          const urlParts = character.url.split("/");
-          currentCharacter.id = urlParts[urlParts.length - 2];
-          currentCharacter.renderKey = `p${character.name}`;
-        });
+        result.people.forEach((character) => prepareCharacter(character));
         return result;
       },
     }),
     getCharacterById: builder.query<Character, string>({
       query: (id) => `${id}/`,
+      transformResponse: (response: Character) => {
+        const result = prepareCharacter(response);
+        return result;
+      },
     }),
   }),
 });

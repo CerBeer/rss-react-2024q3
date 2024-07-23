@@ -8,9 +8,10 @@ interface Props {
   character: Character;
   title: string;
   className: string;
+  idPrefix: string;
 }
 
-function Checked({ character, title, className }: Props) {
+function Checked({ character, title, className, idPrefix }: Props) {
   const checked = useAppSelector((state) => state.checkedSlice.checked);
   const dispatch = useAppDispatch();
   const isChecked = !!checked.find((item) => item.id === character.id);
@@ -22,7 +23,7 @@ function Checked({ character, title, className }: Props) {
 
   return (
     <label
-      htmlFor={character.id}
+      htmlFor={`${idPrefix}${character.id}`}
       className={className}
       data-noclosecard="true"
       onClick={(e) => {
@@ -32,7 +33,7 @@ function Checked({ character, title, className }: Props) {
       <input
         className="change-input"
         data-noclosecard="true"
-        id={character.id}
+        id={`${idPrefix}${character.id}`}
         type="checkbox"
         checked={isChecked}
         onChange={(e) => {

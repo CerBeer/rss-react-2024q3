@@ -10,7 +10,6 @@ import { People } from "../../redux/services/types";
 import Item from "../item/item";
 import Pagination from "../pagination/pagination";
 import ThemeSwitch from "../themeSwitch/themeSwitch";
-// import { useAppDispatch } from "../../redux/hooks";
 
 interface Props {
   data: {
@@ -24,7 +23,6 @@ function Result({ data }: Props) {
   const { page } = useParams();
   const navigate = useNavigate();
   const peopleNow = data.people;
-  // const dispatch = useAppDispatch();
 
   function closeCard(e: React.MouseEvent<HTMLDivElement>) {
     const target = e.target as HTMLElement;

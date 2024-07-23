@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import store from "../redux/store/store";
 import App from "../App";
 
-/* Header */
 describe("App", () => {
   it("renders the page Header", () => {
     render(
