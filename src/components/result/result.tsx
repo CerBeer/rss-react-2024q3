@@ -2,7 +2,6 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { People } from "../../redux/services/types";
 import Item from "../item/item";
 import Pagination from "../pagination/pagination";
-import ThemeSwitch from "../themeSwitch/themeSwitch";
 
 interface Props {
   data: {
@@ -20,7 +19,7 @@ function Result({ data }: Props) {
     return (
       <div className="search-result">
         {" "}
-        <div className="cart">
+        <div className="search-result-empty">
           <p>
             <b>Result is empty</b>
           </p>
@@ -41,7 +40,6 @@ function Result({ data }: Props) {
   return (
     <>
       <div className="search-result" data-testid="search-result">
-        <ThemeSwitch />
         <div className="search-result-list">
           {peopleNow.map((character) => (
             <Item key={character.renderKey} character={character} />

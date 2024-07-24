@@ -39,6 +39,7 @@ function Card() {
           src={`${baseURL}${elementId}.jpg`}
           alt="character"
           data-noclosecard="true"
+          className="card-left-img"
         />
       </div>
       <div className="card-right" data-noclosecard="true">

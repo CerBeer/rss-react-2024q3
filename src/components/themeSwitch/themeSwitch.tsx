@@ -25,7 +25,7 @@ function ThemeSwitch() {
           changeTheme(e.target.checked);
         }}
       />
-      Use dark mode
+      Dark mode
     </label>
   );
 }

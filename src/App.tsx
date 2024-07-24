@@ -10,6 +10,8 @@ import Result from "./components/result/result";
 import useLocalStor from "./hooks/useLocalStor";
 import { ThemeContext } from "./contexts/theme";
 import { useGetPeopleQuery } from "./redux/services/swapi";
+import ThemeSwitch from "./components/themeSwitch/themeSwitch";
+import Flyout from "./components/flyout/flyout";
 
 function App() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -30,7 +32,6 @@ function App() {
     if (target.dataset.noclosecard) return;
     const startLocation = window.location.href;
     if (!startLocation.includes("/card/")) return;
-    // const search = searchParams.get("search") ?? "";
     navigate(`/page/${page}?search=${search}`);
   }
 
@@ -49,6 +50,8 @@ function App() {
           </div>
           <SearchInput />
           {isFetching ? <Spinner /> : <Result data={data ?? emptyData} />}
+          <ThemeSwitch />
+          <Flyout />
         </div>
       </ErrorBoundary>
     </ThemeContext.Provider>

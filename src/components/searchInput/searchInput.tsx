@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import useLocalStor from "../../hooks/useLocalStor";
 
@@ -19,6 +19,14 @@ function SearchInput() {
     setSavedSearch(requestNew);
     navigate(`/page/1?search=${requestNew}`);
   }
+
+  useEffect(() => {
+    let search = searchParams.get("search");
+    if (search === null) {
+      search = savedSearch;
+    }
+    setRequest(search);
+  }, [savedSearch, searchParams]);
 
   return (
     <form className="search-query" method="post" onSubmit={handleSubmit}>
