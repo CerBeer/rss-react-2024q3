@@ -5,18 +5,9 @@ import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import store from "../redux/store/store";
 import Item from "../components/item/item";
-import { Character } from "../redux/services/types";
+import { MockCharacters } from "./mockData";
 
-const mockCharacter: Character = {
-  id: "1",
-  renderKey: "1",
-  name: "Test Character",
-  birth_year: "now",
-  gender: "unknown",
-  height: "87",
-  mass: "49",
-  url: "/id/1",
-};
+const mockCharacter = MockCharacters[0];
 
 describe("Item", () => {
   it("renders item", () => {
@@ -27,7 +18,7 @@ describe("Item", () => {
         </BrowserRouter>
       </Provider>,
     );
-    expect(screen.queryByText("Test Character")).toBeInTheDocument();
+    expect(screen.queryByText(mockCharacter.name)).toBeInTheDocument();
   });
 
   it("opens Card", async () => {
@@ -42,7 +33,7 @@ describe("Item", () => {
       </Provider>,
     );
 
-    await userEvent.setup().click(screen.getByText("Test Character"));
+    await userEvent.setup().click(screen.getByText(mockCharacter.name));
     expect(screen.getByText("Opened Card")).toBeInTheDocument();
   });
 });

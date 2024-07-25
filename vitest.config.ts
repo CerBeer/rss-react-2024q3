@@ -13,6 +13,7 @@ export default mergeConfig(
           ...configDefaults.exclude,
           'src/main.tsx',
           '.eslintrc.cjs',
+          'src/__tests__/*',
         ],
       },
     },

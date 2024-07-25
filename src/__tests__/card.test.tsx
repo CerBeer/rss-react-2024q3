@@ -15,18 +15,9 @@ import { http, HttpResponse, delay } from "msw";
 import { setupServer } from "msw/node";
 import Card from "../components/card/card";
 import store from "../redux/store/store";
-import { Character } from "../redux/services/types";
+import { MockCharacters } from "./mockData";
 
-const mockCharacter: Character = {
-  id: "1",
-  renderKey: "1",
-  name: "Test Character",
-  birth_year: "now",
-  gender: "unknown",
-  height: "87",
-  mass: "49",
-  url: "/id/1",
-};
+const mockCharacter = MockCharacters[0];
 
 const handlers = [
   http.get("https://swapi.dev/api/people/1/", async () => {
@@ -99,6 +90,6 @@ describe("Card", () => {
     expect(closeButton).toBeInTheDocument();
 
     await userEvent.setup().click(closeButton);
-    expect(screen.queryByText("Test Character")).not.toBeInTheDocument();
+    expect(screen.queryByText(mockCharacter.name)).not.toBeInTheDocument();
   });
 });

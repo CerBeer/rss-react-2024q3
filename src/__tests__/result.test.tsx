@@ -5,20 +5,9 @@ import { Provider } from "react-redux";
 import userEvent from "@testing-library/user-event";
 import store from "../redux/store/store";
 import Result from "../components/result/result";
-import { People } from "../redux/services/types";
+import { MockCharacters } from "./mockData";
 
-const mockPeople: People = [
-  {
-    id: "1",
-    renderKey: "1",
-    name: "Test Character",
-    birth_year: "now",
-    gender: "unknown",
-    height: "87",
-    mass: "49",
-    url: "/id/1",
-  },
-];
+const mockPeople = [MockCharacters[0]];
 
 describe("Result", () => {
   it("renders empty Result", () => {
@@ -43,7 +32,7 @@ describe("Result", () => {
       </Provider>,
     );
 
-    expect(screen.getByText("Test Character")).toBeInTheDocument();
+    expect(screen.getByText(mockPeople[0].name)).toBeInTheDocument();
   });
 
   it("empty result", async () => {

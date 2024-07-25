@@ -1,33 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { Character } from "../redux/services/types";
 import checkedReducer, {
   addCharacter,
   delCharacter,
   clearChecked,
 } from "../redux/store/checkedSlice";
+import { MockCharacters } from "./mockData";
 
-const mockCharacters: Character[] = [
-  {
-    id: "11",
-    renderKey: "11",
-    name: "Test Character 1",
-    birth_year: "now",
-    gender: "unknown",
-    height: "17",
-    mass: "19",
-    url: "/id/11",
-  },
-  {
-    id: "22",
-    renderKey: "22",
-    name: "Test Character 2",
-    birth_year: "tomorrow",
-    gender: "same",
-    height: "27",
-    mass: "29",
-    url: "/id/22",
-  },
-];
+const mockCharacters = MockCharacters;
 
 describe("checkedSlice", () => {
   const actionAdd1 = { type: addCharacter.type, payload: mockCharacters[0] };

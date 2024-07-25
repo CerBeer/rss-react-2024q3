@@ -3,19 +3,10 @@ import { describe, it, expect } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import store from "../redux/store/store";
-import { Character } from "../redux/services/types";
 import Checked from "../components/checked/checked";
+import { MockCharacters } from "./mockData";
 
-const mockCharacter: Character = {
-  id: "1",
-  renderKey: "1",
-  name: "Test Character",
-  birth_year: "now",
-  gender: "unknown",
-  height: "87",
-  mass: "49",
-  url: "/id/1",
-};
+const mockCharacter = MockCharacters[0];
 
 describe("Item", () => {
   it("opens Card", async () => {
