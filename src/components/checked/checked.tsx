@@ -33,6 +33,7 @@ function Checked({ character, title, className, idPrefix }: Props) {
       <input
         className="change-input"
         data-noclosecard="true"
+        data-testid="checked-input"
         id={`${idPrefix}${character.id}`}
         type="checkbox"
         checked={isChecked}

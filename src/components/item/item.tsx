@@ -8,12 +8,6 @@ interface Props {
 
 function Item({ character }: Props) {
   const [searchParams] = useSearchParams();
-  if (!character)
-    return (
-      <div className="item">
-        <b>Result is empty</b>
-      </div>
-    );
 
   const search = searchParams.get("search") ?? "";
   const searchAdd = `?search=${search}`;

@@ -5,8 +5,7 @@ function ThemeSwitch() {
   const { theme, setTheme } = useContext(ThemeContext);
 
   function changeTheme(checked: boolean) {
-    if (!setTheme) return;
-    setTheme(checked ? Theme.Dark : Theme.Light);
+    if (setTheme) setTheme(checked ? Theme.Dark : Theme.Light);
   }
 
   return (
@@ -18,14 +17,16 @@ function ThemeSwitch() {
       <input
         className="change-input"
         data-noclosecard="true"
+        data-testid="theme-change-input"
         id="ThemeChange"
         type="checkbox"
         checked={theme === Theme.Dark}
         onChange={(e) => {
           changeTheme(e.target.checked);
         }}
+        hidden
       />
-      Dark mode
+      {theme === Theme.Light ? Theme.Dark : Theme.Light} mode
     </label>
   );
 }

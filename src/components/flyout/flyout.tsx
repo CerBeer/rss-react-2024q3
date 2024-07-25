@@ -15,12 +15,16 @@ function Flyout() {
   }, csvHeader);
 
   const onDownload = () => {
-    const csvData = new Blob([csvFile], { type: "text/csv" });
-    const csvURL = URL.createObjectURL(csvData);
-    const link = document.createElement("a");
-    link.href = csvURL;
-    link.download = `${countItems}_people.csv`;
-    link.click();
+    try {
+      const csvData = new Blob([csvFile], { type: "text/csv" });
+      const csvURL = URL.createObjectURL(csvData);
+      const link = document.createElement("a");
+      link.href = csvURL;
+      link.download = `${countItems}_people.csv`;
+      link.click();
+    } catch (err) {
+      /* empty */
+    }
   };
 
   function onUnselectAll() {

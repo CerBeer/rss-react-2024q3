@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import userEvent from "@testing-library/user-event";
-import { BrowserRouter, MemoryRouter } from "react-router-dom";
+import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
+import userEvent from "@testing-library/user-event";
 import store from "../redux/store/store";
 import Result from "../components/result/result";
 import { People } from "../redux/services/types";
@@ -46,17 +46,21 @@ describe("Result", () => {
     expect(screen.getByText("Test Character")).toBeInTheDocument();
   });
 
-  it("close test result", async () => {
-    const data = { people: mockPeople, totalItem: 1 };
+  it("empty result", async () => {
+    const data = { people: [], totalItem: 0 };
     render(
       <Provider store={store}>
-        <MemoryRouter initialEntries={["/page/1/card/1/?search="]}>
-          <Result data={data} />
+        <MemoryRouter initialEntries={["/page/3/?search=none"]}>
+          <Routes>
+            <Route path="/page/3/" element={<Result data={data} />} />
+            <Route path="/page/1/" element={<div>Home</div>} />
+          </Routes>
         </MemoryRouter>
       </Provider>,
     );
 
-    await userEvent.setup().click(screen.getByTestId("search-result"));
-    expect(screen.getByText("Test Character")).toBeInTheDocument();
+    expect(screen.getByText("Result is empty")).toBeInTheDocument();
+    await userEvent.setup().click(screen.getByRole("button"));
+    expect(screen.getByText("Home")).toBeInTheDocument();
   });
 });

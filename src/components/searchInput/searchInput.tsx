@@ -5,7 +5,7 @@ import useLocalStor from "../../hooks/useLocalStor";
 function SearchInput() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [savedSearch, setSavedSearch] = useLocalStor("previousRequest");
+  const [savedSearch, setSavedSearch] = useLocalStor("previousRequest", "");
 
   let savedRequest = searchParams.get("search");
   if (savedRequest === null) {
