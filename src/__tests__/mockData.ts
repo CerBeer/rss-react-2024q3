@@ -8,7 +8,7 @@ export const mockCharacter: Character = {
   gender: "unknown",
   height: "87",
   mass: "49",
-  url: "/id/1",
+  url: "/id/1/",
 };
 
 export const MockCharacters: People = [
@@ -20,7 +20,7 @@ export const MockCharacters: People = [
     gender: "unknown",
     height: "17",
     mass: "19",
-    url: "/id/11",
+    url: "/id/11/",
   },
   {
     id: "22",
@@ -30,6 +30,6 @@ export const MockCharacters: People = [
     gender: "same",
     height: "27",
     mass: "29",
-    url: "/id/22",
+    url: "/id/22/",
   },
 ];

@@ -24,6 +24,10 @@ const handlers = [
     await delay(150);
     return HttpResponse.json(mockCharacter);
   }),
+  http.get("https://swapi.dev/api/people/2/", async () => {
+    await delay(150);
+    return HttpResponse.json();
+  }),
 ];
 
 const server = setupServer(...handlers);
@@ -72,6 +76,20 @@ describe("Card", () => {
     expect(await screen.findByText(mockCharacter.name)).toBeInTheDocument();
     expect(screen.getByAltText("character")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /X/i })).toBeInTheDocument();
+  });
+
+  it("renders empty Card", async () => {
+    render(
+      <Provider store={store}>
+        <MemoryRouter initialEntries={["/card/2"]}>
+          <Routes>
+            <Route path="/card/:elementId" element={<Card />} />
+          </Routes>
+        </MemoryRouter>
+      </Provider>,
+    );
+
+    expect(await screen.findByText("Result is empty")).toBeInTheDocument();
   });
 
   it("close Card", async () => {

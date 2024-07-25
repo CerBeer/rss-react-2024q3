@@ -2,9 +2,12 @@ import { useState } from "react";
 
 export default function useLocalStor(valueName: string, defaultValue: string) {
   function initState() {
-    const currentValue = localStorage.getItem(valueName);
-    if (!currentValue) localStorage.setItem(valueName, defaultValue);
-    return localStorage.getItem(valueName) ?? "";
+    let currentValue = localStorage.getItem(valueName);
+    if (!currentValue) {
+      localStorage.setItem(valueName, defaultValue);
+      currentValue = defaultValue;
+    }
+    return currentValue;
   }
 
   const [value, setValue] = useState(initState());

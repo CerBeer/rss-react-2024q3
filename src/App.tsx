@@ -19,7 +19,6 @@ function App() {
   const [savedSearch] = useLocalStor("previousRequest", "");
   const [theme, setTheme] = useLocalStor("previousTheme", Theme.Light);
   const themeValue = useMemo(() => ({ theme, setTheme }), [setTheme, theme]);
-  const emptyData = { totalItem: 0, people: [] };
   const navigate = useNavigate();
 
   let search = searchParams.get("search");
@@ -29,10 +28,9 @@ function App() {
 
   function closeCard(e: React.MouseEvent<HTMLDivElement>) {
     const target = e.target as HTMLElement;
-    if (target.dataset.noclosecard) return;
-    const startLocation = window.location.href;
-    if (!startLocation.includes("/card/")) return;
-    navigate(`/page/${page}?search=${search}`);
+    if (!target.dataset.noclosecard) {
+      navigate(`/page/${page}?search=${search}`);
+    }
   }
 
   const { data, isFetching } = useGetPeopleQuery({ page, search });
@@ -44,12 +42,17 @@ function App() {
   return (
     <ThemeContext.Provider value={themeValue}>
       <ErrorBoundary>
-        <div className="root-theme" data-theme={theme} onClick={closeCard}>
+        <div
+          className="root-theme"
+          data-theme={theme}
+          data-testid="root-theme"
+          onClick={closeCard}
+        >
           <div className="title">
             <h1>Search for Star Wars person or character</h1>
           </div>
           <SearchInput />
-          {isFetching ? <Spinner /> : <Result data={data ?? emptyData} />}
+          {isFetching ? <Spinner /> : <Result data={data!} />}
           <ThemeSwitch />
           <Flyout />
         </div>

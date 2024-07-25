@@ -13,7 +13,12 @@ function Item({ character }: Props) {
   const searchAdd = `?search=${search}`;
 
   return (
-    <Link to={`card/${character.id}${searchAdd}`} className="item-button">
+    <Link
+      to={`card/${character.id}${searchAdd}`}
+      className="item-button"
+      data-testid={`card${character.id}`}
+      data-noclosecard="true"
+    >
       <div className="item" data-noclosecard="true">
         <div className="item-name" data-noclosecard="true">
           {character.name}

@@ -5,15 +5,17 @@ const baseUrl = `${import.meta.env.VITE_API_URL_BASE}${import.meta.env.VITE_API_
 
 function prepareCharacter(character: Character) {
   const currentCharacter = character;
-  const urlParts = character.url.split("/");
-  currentCharacter.id = urlParts[urlParts.length - 2];
-  currentCharacter.renderKey = `p${character.name}`;
+  if (character?.url && character.name) {
+    const urlParts = character.url.split("/");
+    currentCharacter.id = urlParts[urlParts.length - 2];
+    currentCharacter.renderKey = `p${character.name}`;
+  }
   return currentCharacter;
 }
 
 export interface SearchParam {
   page: string | undefined;
-  search: string | undefined;
+  search: string;
 }
 
 export const swApi = createApi({
@@ -22,11 +24,11 @@ export const swApi = createApi({
   endpoints: (builder) => ({
     getPeople: builder.query<State, SearchParam>({
       query: (param: SearchParam) =>
-        `?page=${param.page ?? "1"}&search=${param.search ?? ""}`,
+        `?page=${param.page ?? "1"}&search=${param.search}`,
       transformResponse: (response: PeopleAnswer) => {
         const result = {
-          people: response.results ?? [],
-          totalItem: response.count ?? 0,
+          people: response?.results ?? [],
+          totalItem: response?.count ?? 0,
         };
         result.people.forEach((character) => prepareCharacter(character));
         return result;
