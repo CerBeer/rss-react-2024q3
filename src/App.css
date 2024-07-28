@@ -7,6 +7,11 @@
   padding: 0 2rem;
 }
 
+.error-page {
+  color: var(--error-boundary-color);
+  background-color: var(--error-boundary-body-color);
+}
+
 .error-boundary {
   color: var(--error-boundary-color);
   max-width: 780px;

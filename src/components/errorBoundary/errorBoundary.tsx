@@ -1,8 +1,10 @@
 import { Component, ReactNode } from "react";
+import { Theme, ThemeType } from "../../contexts/theme";
 
 interface ErrorBoundaryState {
   hasError: boolean;
   errorMessage: string;
+  theme: ThemeType;
 }
 
 interface ErrorBoundaryProps {
@@ -12,7 +14,8 @@ interface ErrorBoundaryProps {
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false, errorMessage: "" };
+    const theme = localStorage.getItem("previousTheme") ?? Theme.Light;
+    this.state = { hasError: false, errorMessage: "", theme };
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -26,11 +29,11 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   };
 
   render() {
-    const { hasError, errorMessage } = this.state;
+    const { hasError, errorMessage, theme } = this.state;
     const { children } = this.props;
     if (hasError) {
       return (
-        <div className="error-boundary">
+        <div className="error-boundary root-theme" data-theme={theme}>
           <div className="error-boundary-head">{errorMessage}</div>
           <button type="button" onClick={this.handleClick}>
             Fix this error
