@@ -17,3 +17,8 @@ export interface PeopleAnswer {
   previous: string | null;
   results: People;
 }
+
+export interface State {
+  people: People;
+  totalItem: number;
+}

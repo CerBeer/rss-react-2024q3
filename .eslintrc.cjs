@@ -15,7 +15,7 @@ module.exports = {
     'plugin:react/jsx-runtime',
     "plugin:prettier/recommended"
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts', 'coverage'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts', 'vitest.config.ts', 'coverage'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: "latest",

@@ -1,15 +1,20 @@
 import { useState } from "react";
 
-export default function useLocalStor(valueName: string) {
+export default function useLocalStor(valueName: string, defaultValue: string) {
   function initState() {
-    return localStorage.getItem(valueName) ?? "";
+    let currentValue = localStorage.getItem(valueName);
+    if (!currentValue) {
+      localStorage.setItem(valueName, defaultValue);
+      currentValue = defaultValue;
+    }
+    return currentValue;
   }
 
-  const [value, seValue] = useState(initState());
+  const [value, setValue] = useState(initState());
 
   function setNewValue(newValue: string) {
     localStorage.setItem(valueName, newValue);
-    seValue(newValue);
+    setValue(newValue);
   }
 
   return [value, setNewValue] as const;

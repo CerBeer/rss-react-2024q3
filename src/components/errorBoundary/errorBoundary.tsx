@@ -1,9 +1,10 @@
-import { Component, ErrorInfo, ReactNode } from "react";
+import { Component, ReactNode } from "react";
+import { Theme, ThemeType } from "../../contexts/theme";
 
 interface ErrorBoundaryState {
   hasError: boolean;
   errorMessage: string;
-  errorInfo: string;
+  theme: ThemeType;
 }
 
 interface ErrorBoundaryProps {
@@ -13,28 +14,27 @@ interface ErrorBoundaryProps {
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false, errorMessage: "", errorInfo: "" };
+    const theme = localStorage.getItem("previousTheme") ?? Theme.Light;
+    this.state = { hasError: false, errorMessage: "", theme };
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidCatch(error: Error, info: ErrorInfo) {
-    const errorInfo = info.componentStack ?? "";
+  componentDidCatch(error: Error) {
     const errorMessage = error.message;
-    this.setState({ hasError: true, errorMessage, errorInfo });
+    this.setState({ hasError: true, errorMessage });
   }
 
   handleClick = () => {
-    this.setState({ hasError: false, errorInfo: "" });
+    this.setState({ hasError: false });
   };
 
   render() {
-    const { hasError, errorMessage, errorInfo } = this.state;
+    const { hasError, errorMessage, theme } = this.state;
     const { children } = this.props;
     if (hasError) {
       return (
-        <div className="error-boundary">
+        <div className="error-boundary root-theme" data-theme={theme}>
           <div className="error-boundary-head">{errorMessage}</div>
-          <div className="error-boundary-body">{errorInfo}</div>
           <button type="button" onClick={this.handleClick}>
             Fix this error
           </button>

@@ -1,63 +1,63 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import "./App.css";
-import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useMemo } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import SearchInput from "./components/searchInput/searchInput";
 import Spinner from "./components/spinner/spinner";
 import ErrorBoundary from "./components/errorBoundary/errorBoundary";
-import { getPeople } from "./api/swapi";
-import { People, Character } from "./api/swapiTypes";
 import Result from "./components/result/result";
 import useLocalStor from "./hooks/useLocalStor";
-
-interface State {
-  request: string;
-  people: People;
-  totalItem: number;
-}
+import { ThemeContext, Theme } from "./contexts/theme";
+import { useGetPeopleQuery } from "./redux/services/swapi";
+import ThemeSwitch from "./components/themeSwitch/themeSwitch";
+import Flyout from "./components/flyout/flyout";
 
 function App() {
-  const [nowQuery, setNowQuery] = useState(false);
-  const [people, setPeople] = useState(new Array<Character>());
-  const [totalItem, setTotalItem] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
   const { page } = useParams();
-  const [savedSearch] = useLocalStor("previousRequest");
+  const [savedSearch] = useLocalStor("previousRequest", "");
+  const [theme, setTheme] = useLocalStor("previousTheme", Theme.Light);
+  const themeValue = useMemo(() => ({ theme, setTheme }), [setTheme, theme]);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    let search = searchParams.get("search");
-    if (search === null) {
-      search = savedSearch;
-      setSearchParams({ search });
-    }
-  });
-
-  function updateState(state: State) {
-    setNowQuery(false);
-    setPeople(state.people);
-    setTotalItem(state.totalItem);
+  let search = searchParams.get("search");
+  if (search === null) {
+    search = savedSearch;
   }
 
-  useEffect(() => {
-    let search = searchParams.get("search");
-    if (search === null) {
-      search = savedSearch;
+  function closeCard(e: React.MouseEvent<HTMLDivElement>) {
+    const target = e.target as HTMLElement;
+    if (!target.dataset.noclosecard) {
+      navigate(`/page/${page}?search=${search}`);
     }
-    setNowQuery(true);
-    void getPeople(updateState, search ?? "", page ?? "1");
-  }, [searchParams, page, savedSearch]);
+  }
+
+  const { data, isFetching } = useGetPeopleQuery({ page, search });
+
+  useEffect(() => {
+    setSearchParams({ search });
+  }, [search, setSearchParams]);
 
   return (
-    <ErrorBoundary>
-      <div className="title">
-        <h1>Search for Star Wars person or character</h1>
-      </div>
-      <SearchInput />
-      {nowQuery ? (
-        <Spinner />
-      ) : (
-        <Result people={people} totalItem={totalItem} />
-      )}
-    </ErrorBoundary>
+    <ThemeContext.Provider value={themeValue}>
+      <ErrorBoundary>
+        <div
+          className="root-theme"
+          data-theme={theme}
+          data-testid="root-theme"
+          onClick={closeCard}
+        >
+          <div className="title">
+            <h1>Search for Star Wars person or character</h1>
+          </div>
+          <SearchInput />
+          {isFetching ? <Spinner /> : <Result data={data!} />}
+          <ThemeSwitch />
+          <Flyout />
+        </div>
+      </ErrorBoundary>
+    </ThemeContext.Provider>
   );
 }
 

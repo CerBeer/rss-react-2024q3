@@ -20,6 +20,7 @@ function Pagination({ totalItem, page }: Props) {
       <Link
         to={`/page/${currenPage - (currenPage > 1 ? 1 : 0)}${searchAdd}`}
         className={`link ${currenPage > 1 ? "" : "disabled-link"}`}
+        data-noclosecard="true"
       >
         prev
       </Link>
@@ -29,6 +30,7 @@ function Pagination({ totalItem, page }: Props) {
       <Link
         to={`/page/${currenPage + (currenPage < totalPages ? 1 : 0)}${searchAdd}`}
         className={`link ${currenPage < totalPages ? "" : "disabled-link"}`}
+        data-noclosecard="true"
       >
         next
       </Link>

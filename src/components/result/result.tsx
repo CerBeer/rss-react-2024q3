@@ -1,64 +1,44 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-import {
-  Outlet,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
-import { People } from "../../api/swapiTypes";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { People } from "../../redux/services/types";
 import Item from "../item/item";
 import Pagination from "../pagination/pagination";
+import useLocalStor from "../../hooks/useLocalStor";
 
 interface Props {
-  totalItem: number;
-  people: People;
+  data: {
+    totalItem: number;
+    people: People;
+  };
 }
 
-function Result({ people, totalItem }: Props) {
-  const [searchParams] = useSearchParams();
+function Result({ data }: Props) {
   const { page } = useParams();
   const navigate = useNavigate();
-  const peopleNow = people;
+  const [, setSavedSearch] = useLocalStor("previousRequest", "");
+  const peopleNow = data.people;
 
-  function closeCard(e: React.MouseEvent<HTMLDivElement>) {
-    const target = e.target as HTMLElement;
-    if (target.dataset.noclosecard) return;
-    const startLocation = window.location.href;
-    if (!startLocation.includes("/card/")) return;
-    const search = searchParams.get("search") ?? "";
-    navigate(`/page/${page}?search=${search}`);
+  function handleGoHome() {
+    setSavedSearch("");
+    navigate(`/page/1?search=`);
   }
 
   if (!peopleNow.length)
     return (
-      <div className="search-result">
-        {" "}
-        <div className="cart">
-          <p>
-            <b>Result is empty</b>
-          </p>
-          <p>
-            <button type="button" onClick={() => navigate(-1)}>
-              &larr; Go back
-            </button>
-          </p>
-          <p>
-            <button type="button" onClick={() => navigate(`/page/1`)}>
-              &larr; Go home
-            </button>
-          </p>
-        </div>
+      <div className="search-result-empty">
+        <p>
+          <b>Result is empty</b>
+        </p>
+        <p>
+          <button type="button" onClick={handleGoHome}>
+            &larr; Go home
+          </button>
+        </p>
       </div>
     );
 
   return (
     <>
-      <div
-        className="search-result"
-        data-testid="search-result"
-        onClick={closeCard}
-      >
+      <div className="search-result" data-testid="search-result">
         <div className="search-result-list">
           {peopleNow.map((character) => (
             <Item key={character.renderKey} character={character} />
@@ -66,7 +46,7 @@ function Result({ people, totalItem }: Props) {
         </div>
         <Outlet />
       </div>
-      <Pagination page={page ?? "1"} totalItem={totalItem} />
+      <Pagination page={page ?? "1"} totalItem={data.totalItem} />
     </>
   );
 }
