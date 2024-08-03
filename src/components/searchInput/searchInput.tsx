@@ -1,38 +1,31 @@
 import { useState, FormEvent, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import useLocalStor from "../../hooks/useLocalStor";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import React from "react";
 
 function SearchInput() {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const [savedSearch, setSavedSearch] = useLocalStor("previousRequest", "");
+  const router = useRouter();
+  const { push } = router;
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  let savedRequest = searchParams.get("search");
-  if (savedRequest === null) {
-    savedRequest = savedSearch;
-  }
-  const [request, setRequest] = useState(savedRequest);
+  const [request, setRequest] = useState("");
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const requestNew = request.trim();
-    setSavedSearch(requestNew);
-    navigate(`/page/1?search=${requestNew}`);
+    push(`${pathname}?search=${requestNew}`);
   }
 
   useEffect(() => {
-    let search = searchParams.get("search");
-    if (search === null) {
-      search = savedSearch;
-    }
+    const search = searchParams?.get("search") ?? "";
     setRequest(search);
-  }, [savedSearch, searchParams]);
+  }, [searchParams]);
 
   return (
     <form className="search-query" method="post" onSubmit={handleSubmit}>
       <input
         data-testid="search-query-input"
-        data-noclosecard="true"
         className="search-query-input"
         name="searchQuery"
         value={request}

@@ -1,9 +1,9 @@
-import { defineConfig, mergeConfig, configDefaults } from 'vitest/config'
-import viteConfig from './vite.config.ts'
+import { defineConfig, configDefaults } from 'vitest/config'
+import react from "@vitejs/plugin-react";
 
-export default mergeConfig(
-  viteConfig,
+export default 
   defineConfig({
+    plugins: [react()],
     test: {
       environment: 'jsdom',
       globals: true,
@@ -11,11 +11,10 @@ export default mergeConfig(
       coverage: {
         exclude: [
           ...configDefaults.exclude,
-          'src/main.tsx',
           '.eslintrc.cjs',
           'src/__tests__/*',
+          '_previous/*',
         ],
       },
     },
-  }),
-)
+  })

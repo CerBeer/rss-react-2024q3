@@ -1,4 +1,4 @@
-import { Character, People } from "../redux/services/types";
+import { Character, People } from "./types";
 
 export const mockCharacter: Character = {
   id: "1",

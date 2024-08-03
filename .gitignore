@@ -146,7 +146,13 @@ dist-ssr
 # Our project
 .vite
 *.mjs
+!next.config.mjs
 .husky/_
 
 # Enable in our project
 !.env
+
+.next
+!next-env.d.ts
+dist
+_previous
