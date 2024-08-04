@@ -1,12 +1,11 @@
 import { useState, FormEvent, useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import React from "react";
 
 function SearchInput() {
   const router = useRouter();
   const { push } = router;
-  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const [request, setRequest] = useState("");
@@ -14,7 +13,7 @@ function SearchInput() {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const requestNew = request.trim();
-    push(`${pathname}?search=${requestNew}`);
+    push(`/page/1/?search=${requestNew}`);
   }
 
   useEffect(() => {
