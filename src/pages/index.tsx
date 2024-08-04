@@ -1,5 +1,4 @@
 import Head from "next/head";
-
 import SearchInput from "../components/searchInput/searchInput";
 import React, { useEffect, useState } from "react";
 import { PeopleAnswer, FetchResult } from "../api/swapiTypes";
@@ -8,6 +7,11 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import Result from "../components/result/result";
 import { useRouter } from "next/router";
 import Spinner from "../components/spinner/spinner";
+
+const Theme = {
+  Light: "Light",
+  Dark: "Dark",
+};
 
 export const getServerSideProps = (async (context) => {
   const { search, page, details } = context.query;
@@ -37,6 +41,7 @@ const IndexPage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const [routerChange, setRouterChange] = useState(false);
+  const [theme, setTheme] = useState(Theme.Light);
 
   useEffect(() => {
     router.events.on("routeChangeStart", () => {
@@ -48,8 +53,29 @@ const IndexPage = ({
     });
   }, []);
 
+  const { push } = router;
+
+  function closeCard(e: React.MouseEvent<HTMLDivElement>) {
+    if (!repo.query.details) return;
+    const target = e.target as HTMLElement;
+    if (!target.dataset.noclosecard) {
+      console.log("closeCard");
+      const url = `?page=${repo.query.page}&search=${repo.query.search}`;
+      push(url);
+    }
+  }
+
+  function changeTheme(checked: boolean) {
+    if (setTheme) setTheme(checked ? Theme.Dark : Theme.Light);
+  }
+
   return (
-    <div className="root-theme">
+    <div
+      className="root-theme"
+      data-theme={theme}
+      data-testid="root-theme"
+      onClick={closeCard}
+    >
       <Head>
         <title>Star Wars</title>
         <link rel="icon" href="/favicon.ico" />
@@ -59,6 +85,25 @@ const IndexPage = ({
       </div>
       <SearchInput />
       {routerChange ? <Spinner /> : <Result {...repo} />}
+      <label
+        htmlFor="ThemeChange"
+        className="theme-change"
+        data-noclosecard="true"
+      >
+        <input
+          className="change-input"
+          data-noclosecard="true"
+          data-testid="theme-change-input"
+          id="ThemeChange"
+          type="checkbox"
+          checked={theme === Theme.Dark}
+          onChange={(e) => {
+            changeTheme(e.target.checked);
+          }}
+          hidden
+        />
+        {theme === Theme.Light ? Theme.Dark : Theme.Light} mode
+      </label>
     </div>
   );
 };
