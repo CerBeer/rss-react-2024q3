@@ -2,10 +2,10 @@ import { PeopleAnswer, People, Character } from "../../api/swapiTypes";
 import Item from "../item/item";
 import Pagination from "../pagination/pagination";
 import useSWR from "swr";
-import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { NextPage } from "next";
+import { BaseURL } from "../../api/const";
 
 function prepareCharacter(character: Character) {
   const currentCharacter = character;
@@ -28,7 +28,6 @@ const fetcher = (url: string) =>
       result.people.forEach((character) => prepareCharacter(character));
       return result;
     });
-const baseUrl = `${process.env.NEXT_PUBLIC_API_URL_BASE}${process.env.NEXT_PUBLIC_API_URL_SECTION}`;
 
 interface Answer {
   totalItem: number;
@@ -36,12 +35,10 @@ interface Answer {
 }
 
 const Result: NextPage = () => {
-  const router = useRouter();
-  const { pn = "1" } = router.query;
-  const currenPage = pn[0];
   const searchParams = useSearchParams();
-  const search = searchParams.get("search") ?? "";
-  const url = `${baseUrl}?page=${currenPage ?? "1"}${search && "&search=" + search}`;
+  const page = searchParams?.get("page") ?? "1";
+  const search = searchParams?.get("search") ?? "";
+  const url = `${BaseURL}?page=${page}${search && "&search=" + search}`;
 
   const { data, error, isLoading } = useSWR<Answer>(url, fetcher);
   if (error) return <div>Failed to load</div>;
