@@ -51,7 +51,7 @@ vi.mock("", async () => {
 });
 
 describe("App", () => {
-  it("renders the page Header", () => {
+  it("renders the page Header", async () => {
     render(
       <MyApp
         pageProps={undefined}
@@ -61,11 +61,11 @@ describe("App", () => {
     );
 
     expect(
-      screen.queryByText("Search for Star Wars person or character"),
+      await screen.findByText("Search for Star Wars person or character"),
     ).toBeInTheDocument();
   });
 
-  it("renders the page and includes the Search component", () => {
+  it("renders the page and includes the Search component", async () => {
     render(
       <MyApp
         pageProps={undefined}
@@ -74,6 +74,6 @@ describe("App", () => {
       />,
     );
 
-    expect(screen.getByTestId("search-query-input")).toBeInTheDocument();
+    expect(await screen.findByTestId("search-query-input")).toBeInTheDocument();
   });
 });

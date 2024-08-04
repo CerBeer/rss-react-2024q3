@@ -9,6 +9,7 @@ import Pagination from "../components/pagination/pagination";
 import useSWR from "swr";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { BaseURL } from "../api/const";
 
 function prepareCharacter(character: Character) {
   const currentCharacter = character;
@@ -31,7 +32,6 @@ const fetcher = (url: string) =>
       result.people.forEach((character) => prepareCharacter(character));
       return result;
     });
-const baseUrl = `${process.env.NEXT_PUBLIC_API_URL_BASE}${process.env.NEXT_PUBLIC_API_URL_SECTION}`;
 
 interface Answer {
   totalItem: number;
@@ -40,9 +40,9 @@ interface Answer {
 
 const IndexPage: NextPage = () => {
   const searchParams = useSearchParams();
-  const page = searchParams.get("page") ?? "1";
-  const search = searchParams.get("search") ?? "";
-  const url = `${baseUrl}?page=${page}${search && "&search=" + search}`;
+  const page = searchParams?.get("page") ?? "1";
+  const search = searchParams?.get("search") ?? "";
+  const url = `${BaseURL}?page=${page}${search && "&search=" + search}`;
 
   const { data, error, isLoading } = useSWR<Answer>(url, fetcher);
   if (error) return <div>Failed to load</div>;

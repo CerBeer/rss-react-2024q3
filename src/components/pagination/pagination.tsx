@@ -11,8 +11,8 @@ interface Props {
 function Pagination({ totalItem }: Props) {
   const totalPages = Math.ceil(totalItem / elementsPerPage);
   const searchParams = useSearchParams();
-  const page = searchParams.get("page") ?? "1";
-  const search = searchParams.get("search") ?? "";
+  const page = searchParams?.get("page") ?? "1";
+  const search = searchParams?.get("search") ?? "";
   const currenPage = parseInt(page, 10);
 
   return (
