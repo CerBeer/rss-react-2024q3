@@ -1,12 +1,22 @@
+import { useRouter } from "next/router";
 import { Character } from "../../api/swapiTypes";
 
 interface Props {
+  query: {
+    search: string;
+    page: string;
+    details: string;
+  };
   character: Character;
 }
 
-function Item({ character }: Props) {
+function Item({ query, character }: Props) {
+  const router = useRouter();
+  const { push } = router;
+
   function handleClickItem(id: string) {
-    console.log("click item " + id);
+    const url = `?page=${query.page}&search=${query.search}&details=${id}`;
+    push(url);
   }
 
   return (

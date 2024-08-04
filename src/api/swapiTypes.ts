@@ -17,3 +17,13 @@ export interface PeopleAnswer {
   previous: string | null;
   results: People;
 }
+
+export interface FetchResult {
+  query: {
+    search: string;
+    page: string;
+    details: string;
+  };
+  totalItem: number;
+  people: People;
+}

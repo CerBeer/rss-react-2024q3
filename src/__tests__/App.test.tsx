@@ -17,6 +17,15 @@ import { Router } from "next/router";
 
 const mockCharacter = MockCharacters[0];
 const PeopleAnswer = { count: 2, results: MockCharacters };
+const mockRepo = {
+  query: {
+    search: "",
+    page: "1",
+    details: "",
+  },
+  people: MockCharacters,
+  totalItem: 2,
+};
 
 const handlers = [
   http.get("https://swapi.dev/api/people/", async () => {
@@ -55,7 +64,7 @@ describe("App", () => {
     render(
       <MyApp
         pageProps={undefined}
-        Component={() => <IndexPage />}
+        Component={() => <IndexPage repo={mockRepo} />}
         router={{} as Router}
       />,
     );
@@ -69,7 +78,7 @@ describe("App", () => {
     render(
       <MyApp
         pageProps={undefined}
-        Component={() => <IndexPage />}
+        Component={() => <IndexPage repo={mockRepo} />}
         router={{} as Router}
       />,
     );
