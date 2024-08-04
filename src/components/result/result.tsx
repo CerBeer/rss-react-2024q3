@@ -5,6 +5,7 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { NextPage } from "next";
 
 function prepareCharacter(character: Character) {
   const currentCharacter = character;
@@ -34,7 +35,7 @@ interface Answer {
   people: People;
 }
 
-function Result() {
+const Result: NextPage = () => {
   const router = useRouter();
   const { pn = "1" } = router.query;
   const currenPage = pn[0];
@@ -73,6 +74,6 @@ function Result() {
       <Pagination totalItem={totalItem} />
     </>
   );
-}
+};
 
 export default Result;

@@ -1,7 +1,6 @@
 // import "./pagination.css";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
 
 const elementsPerPage = 10;
 
@@ -12,15 +11,14 @@ interface Props {
 function Pagination({ totalItem }: Props) {
   const totalPages = Math.ceil(totalItem / elementsPerPage);
   const searchParams = useSearchParams();
+  const page = searchParams.get("page") ?? "1";
   const search = searchParams.get("search") ?? "";
-  const router = useRouter();
-  const { pn = "1" } = router.query;
-  const currenPage = parseInt(pn[0], 10);
+  const currenPage = parseInt(page, 10);
 
   return (
     <div className="pagination">
       {currenPage > 1 && (
-        <Link href={`${currenPage - 1}${search && "?search=" + search}`}>
+        <Link href={`?page=${currenPage - 1}${search && "&search=" + search}`}>
           prev
         </Link>
       )}
@@ -28,7 +26,7 @@ function Pagination({ totalItem }: Props) {
         {currenPage} of {totalPages}
       </div>
       {currenPage < totalPages && (
-        <Link href={`${currenPage + 1}${search && "?search=" + search}`}>
+        <Link href={`?page=${currenPage + 1}${search && "&search=" + search}`}>
           next
         </Link>
       )}

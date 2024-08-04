@@ -13,7 +13,7 @@ function SearchInput() {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const requestNew = request.trim();
-    push(`/page/1/?search=${requestNew}`);
+    push(`?page=1&search=${requestNew}`);
   }
 
   useEffect(() => {

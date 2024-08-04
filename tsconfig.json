@@ -27,6 +27,6 @@
     "plugins": [{ "name": "next" }],
   },
   "types": ["vitest/globals"],
-  "include": ["src", ".eslintrc.cjs", "./dist/types/**/*.ts", "./next-env.d.ts", "src/app", "src/app/pages"],
+  "include": ["src", ".eslintrc.cjs", "./dist/types/**/*.ts", "./next-env.d.ts", "src/app", "src/app/pages", "_previous/page"],
   "exclude": ["./node_modules"],
 }
