@@ -18,7 +18,10 @@ function Pagination({ totalItem }: Props) {
   return (
     <div className="pagination">
       {currenPage > 1 && (
-        <Link href={`?page=${currenPage - 1}${search && "&search=" + search}`}>
+        <Link
+          href={`?page=${currenPage - 1}${search && "&search=" + search}`}
+          data-noclosecard="true"
+        >
           prev
         </Link>
       )}
@@ -26,7 +29,10 @@ function Pagination({ totalItem }: Props) {
         {currenPage} of {totalPages}
       </div>
       {currenPage < totalPages && (
-        <Link href={`?page=${currenPage + 1}${search && "&search=" + search}`}>
+        <Link
+          href={`?page=${currenPage + 1}${search && "&search=" + search}`}
+          data-noclosecard="true"
+        >
           next
         </Link>
       )}

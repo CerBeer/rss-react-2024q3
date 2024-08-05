@@ -14,6 +14,10 @@ const Theme = {
 };
 
 export const getServerSideProps = (async (context) => {
+  context.res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59",
+  );
   const { search, page, details } = context.query;
   const url = `${BaseURL}?page=${page ?? "1"}&search=${search ?? ""}`;
   const res = await fetch(url);
@@ -44,12 +48,19 @@ const IndexPage = ({
   const [theme, setTheme] = useState(Theme.Light);
 
   useEffect(() => {
-    router.events.on("routeChangeStart", () => {
+    router.events.on("routeChangeStart", (url: string) => {
+      console.log("routeChangeStart");
+      if (url.includes("&details=")) {
+        return;
+      }
       setRouterChange(true);
-      router.events.on("routeChangeComplete", () => {
-        setRouterChange(false);
-        router.events.off("routeChangeComplete", () => {});
-      });
+    });
+    router.events.on("routeChangeComplete", (url: string) => {
+      console.log("routeChangeComplete");
+      if (url.includes("&details=")) {
+        return;
+      }
+      setRouterChange(false);
     });
   }, []);
 
@@ -59,8 +70,7 @@ const IndexPage = ({
     if (!repo.query.details) return;
     const target = e.target as HTMLElement;
     if (!target.dataset.noclosecard) {
-      console.log("closeCard");
-      const url = `?page=${repo.query.page}&search=${repo.query.search}`;
+      const url = `?page=${repo.query.page}&search=${repo.query.search}&details=0`;
       push(url);
     }
   }
