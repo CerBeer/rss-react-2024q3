@@ -1,6 +1,6 @@
 import Head from "next/head";
 import SearchInput from "../components/searchInput/searchInput";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { PeopleAnswer, FetchResult } from "../api/swapiTypes";
 import { BaseURL } from "../api/swapiConst";
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
@@ -8,11 +8,8 @@ import Result from "../components/result/result";
 import { useRouter } from "next/router";
 import Spinner from "../components/spinner/spinner";
 import Flyout from "../components/flyout/flyout";
-
-const Theme = {
-  Light: "Light",
-  Dark: "Dark",
-};
+import ThemeSwitch from "../components/themeSwitch/themeSwitch";
+import ThemeContext from "../features/theme";
 
 export const getServerSideProps = (async (context) => {
   context.res.setHeader(
@@ -46,7 +43,6 @@ const IndexPage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const [routerChange, setRouterChange] = useState(false);
-  const [theme, setTheme] = useState(Theme.Light);
 
   useEffect(() => {
     router.events.on("routeChangeStart", (url: string) => {
@@ -74,9 +70,7 @@ const IndexPage = ({
     }
   }
 
-  function changeTheme(checked: boolean) {
-    if (setTheme) setTheme(checked ? Theme.Dark : Theme.Light);
-  }
+  const { theme } = useContext(ThemeContext);
 
   return (
     <div
@@ -94,25 +88,7 @@ const IndexPage = ({
       </div>
       <SearchInput />
       {routerChange ? <Spinner /> : <Result {...repo} />}
-      <label
-        htmlFor="ThemeChange"
-        className="theme-change"
-        data-noclosecard="true"
-      >
-        <input
-          className="change-input"
-          data-noclosecard="true"
-          data-testid="theme-change-input"
-          id="ThemeChange"
-          type="checkbox"
-          checked={theme === Theme.Dark}
-          onChange={(e) => {
-            changeTheme(e.target.checked);
-          }}
-          hidden
-        />
-        {theme === Theme.Light ? Theme.Dark : Theme.Light} mode
-      </label>
+      <ThemeSwitch />
       <Flyout />
     </div>
   );
