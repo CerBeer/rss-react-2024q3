@@ -7,6 +7,7 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import Result from "../components/result/result";
 import { useRouter } from "next/router";
 import Spinner from "../components/spinner/spinner";
+import Flyout from "../components/flyout/flyout";
 
 const Theme = {
   Light: "Light",
@@ -114,6 +115,7 @@ const IndexPage = ({
         />
         {theme === Theme.Light ? Theme.Dark : Theme.Light} mode
       </label>
+      <Flyout />
     </div>
   );
 };

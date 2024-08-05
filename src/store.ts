@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import counterReducer from "./features/counter/counterSlice";
+import checkedReducer from "./features/checkedSlice";
 
 export function makeStore() {
   return configureStore({
-    reducer: { counter: counterReducer },
+    reducer: { counter: counterReducer, checkedSlice: checkedReducer },
   });
 }
 

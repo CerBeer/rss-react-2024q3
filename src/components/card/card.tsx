@@ -5,6 +5,7 @@ import { SWApi } from "../../api/swapiConst";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Spinner from "../spinner/spinner";
+import Checked from "../checked/checked";
 
 interface Props {
   query: {
@@ -27,6 +28,12 @@ function CardDetail({ query, data }: Props) {
         />
       </div>
       <div className="card-right" data-noclosecard="true">
+        <Checked
+          character={data}
+          className="character-checked-change"
+          title="Select"
+          idPrefix="card"
+        />
         <Link
           className="button card-button-close"
           href={`?page=${query.page}&search=${query.search}&details=0`}

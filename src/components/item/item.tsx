@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { Character } from "../../api/swapiTypes";
+import Checked from "../checked/checked";
 
 interface Props {
   query: {
@@ -38,6 +39,12 @@ function Item({ query, character }: Props) {
           birth year: {character.birth_year}
         </div>
       </div>
+      <Checked
+        character={character}
+        className="item-checked-change"
+        title=""
+        idPrefix="item"
+      />
     </button>
   );
 }

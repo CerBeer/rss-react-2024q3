@@ -366,6 +366,29 @@ button:focus-visible {
   margin-top: 15px;
 }
 
+.flyout {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1vw;
+  padding: 10px;
+  box-shadow: 2px 2px 5px 3px var(--box-shadow-color);
+  border-radius: 4px;
+  bottom: 0;
+  right: 0;
+  background-color: var(--flyout-background-color);
+}
+
+.flyout-selected-counter {
+  color: var(--flyout-color);
+  background-color: transparent;
+}
+
+.flyout-hide {
+  display: none;
+}
+
 .link {
   color: var(--link-color);
   padding: 4px 8px;
