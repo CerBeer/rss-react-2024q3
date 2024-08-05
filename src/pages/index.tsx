@@ -50,14 +50,12 @@ const IndexPage = ({
 
   useEffect(() => {
     router.events.on("routeChangeStart", (url: string) => {
-      console.log("routeChangeStart");
       if (url.includes("&details=")) {
         return;
       }
       setRouterChange(true);
     });
     router.events.on("routeChangeComplete", (url: string) => {
-      console.log("routeChangeComplete");
       if (url.includes("&details=")) {
         return;
       }

@@ -14,6 +14,7 @@ export default
           '.eslintrc.cjs',
           'src/__tests__/*',
           '_previous/*',
+          'next.config.mjs'
         ],
       },
     },
