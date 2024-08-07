@@ -3,8 +3,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Theme } from "../features/theme";
 import { Router } from "next/router";
-import MyApp from "../pages/_app";
-import IndexPage from "../pages";
+import MyApp from "../_old_pages/_app";
+import IndexPage from "../_old_pages";
 import { MockCharacters } from "./mockData";
 
 const mockRepo = {

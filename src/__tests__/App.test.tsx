@@ -11,8 +11,8 @@ import {
 import { http, HttpResponse, delay } from "msw";
 import { setupServer } from "msw/node";
 import { MockCharacters } from "./mockData";
-import MyApp from "../pages/_app";
-import IndexPage from "../pages/index";
+import MyApp from "../_old_pages/_app";
+import IndexPage from "../_old_pages/index";
 import { Router } from "next/router";
 
 const mockCharacter = MockCharacters[0];

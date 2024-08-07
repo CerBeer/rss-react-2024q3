@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, it, vi, expect, beforeAll } from "vitest";
 import Card from "../components/card/card";
 import { MockCharacters } from "./mockData";
-import MyApp from "../pages/_app";
+import MyApp from "../_old_pages/_app";
 import { Router } from "next/router";
 
 const mockCharacter = MockCharacters[0];

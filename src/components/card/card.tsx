@@ -2,9 +2,6 @@
 import Link from "next/link";
 import { Character } from "../../api/swapiTypes";
 import { SWApi } from "../../api/swapiConst";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import Spinner from "../spinner/spinner";
 import Checked from "../checked/checked";
 
 interface Props {
@@ -61,22 +58,22 @@ function CardDetail({ query, data }: Props) {
 }
 
 function Card({ query, data }: Props) {
-  const router = useRouter();
-  const [routerChange, setRouterChange] = useState(true);
+  // const router = useRouter();
+  // const [routerChange, setRouterChange] = useState(true);
 
-  useEffect(() => {
-    router.events.on("routeChangeStart", (url: string) => {
-      if (!url.includes("&details=0")) {
-        setRouterChange(true);
-      }
-    });
-    router.events.on("routeChangeComplete", () => {
-      setRouterChange(false);
-    });
-    setRouterChange(false);
-  }, []);
+  // useEffect(() => {
+  //   router.events.on("routeChangeStart", (url: string) => {
+  //     if (!url.includes("&details=0")) {
+  //       setRouterChange(true);
+  //     }
+  //   });
+  //   router.events.on("routeChangeComplete", () => {
+  //     setRouterChange(false);
+  //   });
+  //   setRouterChange(false);
+  // }, []);
 
-  return routerChange ? <Spinner /> : <CardDetail data={data} query={query} />;
+  return <CardDetail data={data} query={query} />;
 }
 
 export default Card;
