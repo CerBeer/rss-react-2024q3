@@ -7,7 +7,7 @@ module.exports = {
     "plugin:prettier/recommended",
     "plugin:@next/next/recommended"
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts', 'vitest.config.ts', 'coverage', 'next.config.mjs', 'app'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts', 'vitest.config.ts', 'coverage', 'next.config.mjs'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: "latest",

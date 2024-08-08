@@ -35,12 +35,10 @@ export default async function Page({ searchParams }: SearchParams) {
   console.log(searchParams);
   const queryParams = {
     search: searchParams.search ?? "",
-    page: searchParams.page ?? "",
+    page: searchParams.page ?? "1",
     details: searchParams.details ?? "",
   };
 
-  // Fetch data directly in a Server Component
   const recentPeople: FetchResult = await getPeople(queryParams);
-  // Forward fetched data to your Client Component
   return <HomePage recentPeople={recentPeople} />;
 }

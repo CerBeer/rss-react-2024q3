@@ -1,9 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useMemo, useState } from "react";
+import React from "react";
 import ThemeSwitch from "../components/themeSwitch/themeSwitch";
-import ThemeContext, { Theme } from "../features/theme";
 import Result from "../components/result/result";
 import SearchInput from "../components/searchInput/searchInput";
 import { FetchResult } from "../api/swapiTypes";
@@ -28,29 +27,19 @@ export default function HomePage({ recentPeople }: props) {
     }
   }
 
-  const [theme, setTheme] = useState(Theme.Light);
-  const themeValue = useMemo(() => ({ theme, setTheme }), [setTheme, theme]);
-
   return (
-    <ThemeContext.Provider value={themeValue}>
-      <ErrorBoundary>
-        <Provider store={store}>
-          <div
-            className="root-theme"
-            data-theme={theme}
-            data-testid="root-theme"
-            onClick={closeCard}
-          >
-            <div className="title">
-              <h1>Search for Star Wars person or character</h1>
-            </div>
-            <SearchInput />
-            <Result {...recentPeople} />
-            <ThemeSwitch />
-            <Flyout />
+    <ErrorBoundary>
+      <Provider store={store}>
+        <div onClick={closeCard}>
+          <div className="title">
+            <h1>Search for Star Wars person or character</h1>
           </div>
-        </Provider>
-      </ErrorBoundary>
-    </ThemeContext.Provider>
+          <SearchInput />
+          <Result {...recentPeople} />
+          <ThemeSwitch />
+          <Flyout />
+        </div>
+      </Provider>
+    </ErrorBoundary>
   );
 }
