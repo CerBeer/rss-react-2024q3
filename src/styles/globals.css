@@ -146,6 +146,13 @@ button:focus-visible {
   background-color: var(--error-boundary-color);
 }
 
+.head-page {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+}
+
 .title {
   display: flex;
   position: relative;
@@ -200,15 +207,24 @@ button:focus-visible {
 }
 
 .spinner {
-  height: 200px;
-  width: 200px;
-  padding: 1.5em;
-  margin-top: 40px;
-  background-color: transparent;
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  top: 200px;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+  max-width: 1440px;
+  box-shadow: 2px 2px 5px 3px var(--box-shadow-color);
+  padding: 40px;
 }
 
 .spinner-img {
   height: 100%;
+}
+
+.spinner[data-hide="true"] {
+  display: none;
 }
 
 .search-query {

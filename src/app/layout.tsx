@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import ThemeProvider from "../features/theme-provider";
+import HeadPage from "./head-page";
+import LoaderProvider from "../features/loader-provider";
 
 export const metadata: Metadata = {
   title: "Star Wars",
@@ -14,7 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <LoaderProvider>
+            <HeadPage>{children}</HeadPage>
+          </LoaderProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -11,6 +11,8 @@ type QueryParams = {
   details: string;
 };
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 type SearchParams = { searchParams: QueryParams };
 
 async function getPeople(queryParams: QueryParams): Promise<FetchResult> {
@@ -40,5 +42,6 @@ export default async function Page({ searchParams }: SearchParams) {
   };
 
   const recentPeople: FetchResult = await getPeople(queryParams);
+  await sleep(2000);
   return <HomePage recentPeople={recentPeople} />;
 }
