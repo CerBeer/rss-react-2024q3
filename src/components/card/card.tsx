@@ -58,21 +58,6 @@ function CardDetail({ query, data }: Props) {
 }
 
 function Card({ query, data }: Props) {
-  // const router = useRouter();
-  // const [routerChange, setRouterChange] = useState(true);
-
-  // useEffect(() => {
-  //   router.events.on("routeChangeStart", (url: string) => {
-  //     if (!url.includes("&details=0")) {
-  //       setRouterChange(true);
-  //     }
-  //   });
-  //   router.events.on("routeChangeComplete", () => {
-  //     setRouterChange(false);
-  //   });
-  //   setRouterChange(false);
-  // }, []);
-
   return <CardDetail data={data} query={query} />;
 }
 

@@ -3,15 +3,11 @@ import HomePage from "./home-page";
 import { FetchResult, PeopleAnswer } from "../api/swapiTypes";
 import { BaseURL } from "../api/swapiConst";
 
-// import { useSearchParams } from "next/navigation";
-
 type QueryParams = {
   search: string;
   page: string;
   details: string;
 };
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 type SearchParams = { searchParams: QueryParams };
 
@@ -34,7 +30,6 @@ async function getPeople(queryParams: QueryParams): Promise<FetchResult> {
 }
 
 export default async function Page({ searchParams }: SearchParams) {
-  console.log(searchParams);
   const queryParams = {
     search: searchParams.search ?? "",
     page: searchParams.page ?? "1",
@@ -42,6 +37,5 @@ export default async function Page({ searchParams }: SearchParams) {
   };
 
   const recentPeople: FetchResult = await getPeople(queryParams);
-  await sleep(2000);
   return <HomePage recentPeople={recentPeople} />;
 }

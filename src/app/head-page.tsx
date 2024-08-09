@@ -46,9 +46,6 @@ export default function HeadPage({ children }: { children: React.ReactNode }) {
     }
   }
 
-  // const { spinner } = useContext(LoaderContext);
-  // if (setLoading) setLoading(true);
-  // console.log(spinner!.current);
   const { spinnerRef } = useContext(LoaderContext);
   if (spinnerRef && spinnerRef.current)
     spinnerRef.current.dataset.hide = "false";
@@ -72,7 +69,7 @@ export default function HeadPage({ children }: { children: React.ReactNode }) {
               src={spinner.src}
               alt="loading..."
             />
-          </div>{" "}
+          </div>
           {children}
         </div>
         <ThemeSwitch />

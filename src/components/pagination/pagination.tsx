@@ -14,7 +14,6 @@ function Pagination({ totalItem }: Props) {
   page = page ? page : "1";
   const search = searchParams?.get("search") ?? "";
   const currenPage = parseInt(page, 10);
-  console.log(page, search);
 
   return (
     <div className="pagination">
