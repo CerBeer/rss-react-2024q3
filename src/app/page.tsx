@@ -9,7 +9,7 @@ type QueryParams = {
   details: string;
 };
 
-type SearchParams = { searchParams: QueryParams };
+type SearchParams = { searchParams: QueryParams | undefined };
 
 async function getPeople(queryParams: QueryParams): Promise<FetchResult> {
   const url = `${BaseURL}?page=${queryParams.page ?? "1"}&search=${queryParams.search ?? ""}`;
@@ -31,9 +31,9 @@ async function getPeople(queryParams: QueryParams): Promise<FetchResult> {
 
 export default async function Page({ searchParams }: SearchParams) {
   const queryParams = {
-    search: searchParams.search ?? "",
-    page: searchParams.page ?? "1",
-    details: searchParams.details ?? "",
+    search: searchParams?.search ?? "",
+    page: searchParams?.page ?? "1",
+    details: searchParams?.details ?? "",
   };
 
   const recentPeople: FetchResult = await getPeople(queryParams);

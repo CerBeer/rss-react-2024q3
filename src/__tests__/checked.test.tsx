@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import store from "../store";
 import Checked from "../components/checked/checked";
-import { MockCharacters } from "./mockData";
+import { MockCharacters } from "./test-utils/mockData";
 
 const mockCharacter = MockCharacters[0];
 

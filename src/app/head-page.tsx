@@ -63,12 +63,7 @@ export default function HeadPage({ children }: { children: React.ReactNode }) {
             data-testid="spinner"
             ref={spinnerRef}
           >
-            <Image
-              width={200}
-              height={200}
-              src={spinner.src}
-              alt="loading..."
-            />
+            <Image width={200} height={200} src={spinner} alt="loading..." />
           </div>
           {children}
         </div>
