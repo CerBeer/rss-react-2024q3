@@ -14,13 +14,14 @@ import {
 } from "@remix-run/react";
 import appStylesHref from "./app.css?url";
 import { getPeople } from "./api/swapi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { QueryParams } from "./api/swapiTypes";
 import Item from "./components/item";
 import SearchInput from "./components/searchInput";
 import Card from "./components/card";
 import spinner from "./assets/spinner.gif";
 import Pagination from "./components/pagination";
+import ThemeSwitch, { Theme } from "./components/themeSwitch";
 
 function getSearchParams(searchParams: URLSearchParams): QueryParams {
   const result = {
@@ -44,8 +45,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function App() {
   const navigate = useNavigate();
-  const { people, queryParams } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
+  const { people, queryParams } = useLoaderData<typeof loader>();
+  const [theme, setTheme] = useState(Theme.Light);
 
   useEffect(() => {
     const searchField = document.getElementById("q");
@@ -76,7 +78,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <div className="root-theme" data-testid="root-theme">
+        <div className="root-theme" data-theme={theme} data-testid="root-theme">
           <div className="head-page" onClick={closeCard}>
             <div className="title">
               <h1>Search for Star Wars person or character</h1>
@@ -114,6 +116,7 @@ export default function App() {
             </div>
             <Pagination query={queryParams} totalItem={people.totalItem} />
           </div>
+          <ThemeSwitch theme={theme} setTheme={setTheme} />
         </div>
         <ScrollRestoration />
         <Scripts />
