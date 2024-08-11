@@ -14,7 +14,7 @@ export default mergeConfig(
           ...configDefaults.exclude,
           'src/main.tsx',
           '.eslintrc.cjs',
-          'src/__tests__/*',
+          'app/__tests__/*',
         ],
       },
     },
