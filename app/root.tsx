@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
@@ -15,7 +16,7 @@ import {
 import appStylesHref from "./app.css?url";
 import { getPeople } from "./api/swapi";
 import { useEffect, useState } from "react";
-import { QueryParams } from "./api/swapiTypes";
+import { FetchResult, QueryParams } from "./api/swapiTypes";
 import Item from "./components/item";
 import SearchInput from "./components/searchInput";
 import Card from "./components/card";
@@ -49,7 +50,21 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function App() {
   const navigate = useNavigate();
   const navigation = useNavigation();
-  const { people, queryParams } = useLoaderData<typeof loader>();
+  const loaderData = useLoaderData<typeof loader>();
+  let people = {
+    query: {},
+    people: [],
+    totalItem: 0,
+  } as unknown as FetchResult;
+  let queryParams = {} as QueryParams;
+  if (loaderData) {
+    if (loaderData.people) {
+      people = loaderData.people;
+    }
+    if (loaderData.queryParams) {
+      queryParams = loaderData.queryParams;
+    }
+  }
   const [theme, setTheme] = useState(Theme.Light);
 
   useEffect(() => {
