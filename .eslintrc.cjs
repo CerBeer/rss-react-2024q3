@@ -1,61 +1,80 @@
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
+  env: {
+    browser: true,
+    commonjs: true,
+    es6: true,
+  },
   extends: [
-    "airbnb" ,
-    "airbnb-typescript" ,
-    "airbnb/hooks",
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-type-checked',
-    'plugin:@typescript-eslint/stylistic-type-checked',
-    'plugin:react-hooks/recommended',
-    "plugin:react/recommended",
-    'plugin:jsx-a11y/recommended',
-    'plugin:react/jsx-runtime',
+    "eslint:recommended",
     "plugin:prettier/recommended"
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts', 'vitest.config.ts', 'coverage'],
-  parser: '@typescript-eslint/parser',
+  ignorePatterns: ["!**/.server", "!**/.client", 'dist', '.eslintrc.cjs', 'vite.config.ts', 'vitest.config.ts', 'coverage'],
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
+    ecmaFeatures: {
+      jsx: true,
+    },
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
   },
-  plugins: ['react-refresh', "react",
-    "@typescript-eslint",
-    "react-compiler",
-    "prettier"
-  ],
-  rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
-    "@typescript-eslint/no-explicit-any": "error",
-    "react-compiler/react-compiler": "error",
-    "react/static-property-placement": ["warn", "property assignment", {
-      childContextTypes: "static getter",
-      contextTypes: "static public field",
-      contextType: "static public field",
-      displayName: "static public field",
-      defaultProps: "static public field",
-    }],
-    "react/jsx-no-bind": ["warn", {
-      "ignoreDOMComponents": false,
-      "ignoreRefs": false,
-      "allowArrowFunctions": true,
-      "allowFunctions": true,
-      "allowBind":false
-    }],
-    "no-void": ["error", { "allowAsStatement": true }],
-  },
-  settings: {
-    "import/resolver": {
-      "node": {
-        "paths": ["public"]
-      }
+  overrides: [
+    // React
+    {
+      files: ["**/*.{js,jsx,ts,tsx}"],
+      plugins: ["react", "jsx-a11y"],
+      extends: [
+        "plugin:react/recommended",
+        "plugin:react/jsx-runtime",
+        "plugin:react-hooks/recommended",
+        "plugin:jsx-a11y/recommended",
+      ],
+      settings: {
+        react: {
+          version: "detect",
+        },
+        formComponents: ["Form"],
+        linkComponents: [
+          { name: "Link", linkAttribute: "to" },
+          { name: "NavLink", linkAttribute: "to" },
+        ],
+        "import/resolver": {
+          typescript: {},
+        },
+      },
     },
-  },
+
+    // Typescript
+    {
+      files: ["**/*.{ts,tsx}"],
+      plugins: ["@typescript-eslint", "import", "prettier"],
+      parser: "@typescript-eslint/parser",
+      settings: {
+        "import/internal-regex": "^~/",
+        "import/resolver": {
+          node: {
+            extensions: [".ts", ".tsx"],
+          },
+          typescript: {
+            alwaysTryTypes: true,
+          },
+        },
+      },
+      extends: [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/recommended",
+        "plugin:import/typescript",
+      ],
+    },
+
+    // Node
+    {
+      files: [".eslintrc.js"],
+      env: {
+        node: true,
+      },
+    },
+  ],
 }

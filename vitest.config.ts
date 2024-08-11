@@ -1,5 +1,6 @@
 import { defineConfig, mergeConfig, configDefaults } from 'vitest/config'
 import viteConfig from './vite.config.ts'
+import react from "@vitejs/plugin-react";
 
 export default mergeConfig(
   viteConfig,
@@ -7,7 +8,7 @@ export default mergeConfig(
     test: {
       environment: 'jsdom',
       globals: true,
-      setupFiles: ['src/__tests__/setup.ts'],
+      setupFiles: ['app/__tests__/test-utils/setup.ts'],
       coverage: {
         exclude: [
           ...configDefaults.exclude,
@@ -17,5 +18,6 @@ export default mergeConfig(
         ],
       },
     },
+    plugins: [react()],
   }),
 )
