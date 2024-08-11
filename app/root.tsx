@@ -22,6 +22,9 @@ import Card from "./components/card";
 import spinner from "./assets/spinner.gif";
 import Pagination from "./components/pagination";
 import ThemeSwitch, { Theme } from "./components/themeSwitch";
+import store from "./store/store";
+import { Provider } from "react-redux";
+import Flyout from "./components/flyout";
 
 function getSearchParams(searchParams: URLSearchParams): QueryParams {
   const result = {
@@ -78,46 +81,53 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <div className="root-theme" data-theme={theme} data-testid="root-theme">
-          <div className="head-page" onClick={closeCard}>
-            <div className="title">
-              <h1>Search for Star Wars person or character</h1>
-            </div>
-            <SearchInput query={queryParams} />
-            <div className="search-result" data-testid="search-result">
-              <div className="search-result-list">
-                {people.people.length ? (
-                  people.people.map((character) => (
-                    <Item
-                      key={character.renderKey}
-                      character={character}
-                      query={queryParams}
-                    />
-                  ))
-                ) : (
-                  <div className="search-result-empty">
-                    <p>
-                      <b>Result is empty</b>
-                    </p>
-                    <p>
-                      <NavLink to={"?page=1&search="}>Home</NavLink>{" "}
-                    </p>
-                  </div>
-                )}
+        <Provider store={store}>
+          <div
+            className="root-theme"
+            data-theme={theme}
+            data-testid="root-theme"
+          >
+            <div className="head-page" onClick={closeCard}>
+              <div className="title">
+                <h1>Search for Star Wars person or character</h1>
               </div>
-              {detailsData && <Card query={queryParams} data={detailsData} />}
+              <SearchInput query={queryParams} />
+              <div className="search-result" data-testid="search-result">
+                <div className="search-result-list">
+                  {people.people.length ? (
+                    people.people.map((character) => (
+                      <Item
+                        key={character.renderKey}
+                        character={character}
+                        query={queryParams}
+                      />
+                    ))
+                  ) : (
+                    <div className="search-result-empty">
+                      <p>
+                        <b>Result is empty</b>
+                      </p>
+                      <p>
+                        <NavLink to={"?page=1&search="}>Home</NavLink>{" "}
+                      </p>
+                    </div>
+                  )}
+                </div>
+                {detailsData && <Card query={queryParams} data={detailsData} />}
+              </div>
+              <div
+                className="spinner"
+                data-hide={navigation.state === "loading" ? "false" : "true"}
+                data-testid="spinner"
+              >
+                <img alt="loading..." src={spinner} />
+              </div>
+              <Pagination query={queryParams} totalItem={people.totalItem} />
             </div>
-            <div
-              className="spinner"
-              data-hide={navigation.state === "loading" ? "false" : "true"}
-              data-testid="spinner"
-            >
-              <img alt="loading..." src={spinner} />
-            </div>
-            <Pagination query={queryParams} totalItem={people.totalItem} />
+            <ThemeSwitch theme={theme} setTheme={setTheme} />
+            <Flyout />
           </div>
-          <ThemeSwitch theme={theme} setTheme={setTheme} />
-        </div>
+        </Provider>
         <ScrollRestoration />
         <Scripts />
       </body>

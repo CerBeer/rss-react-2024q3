@@ -1,5 +1,6 @@
 import { NavLink } from "@remix-run/react";
 import { CharacterRecord } from "../api/swapiTypes";
+import Checked from "./checked";
 
 interface Props {
   query: {
@@ -33,6 +34,12 @@ function Item({ query, character }: Props) {
           birth year: {character.birth_year}
         </div>
       </div>
+      <Checked
+        character={character}
+        className="item-checked-change"
+        title=""
+        idPrefix="item"
+      />
     </NavLink>
   );
 }

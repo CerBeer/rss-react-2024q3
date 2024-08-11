@@ -1,6 +1,7 @@
 import { CharacterRecord } from "../api/swapiTypes";
 import { SWApi } from "../api/swapiConst";
 import { NavLink } from "@remix-run/react";
+import Checked from "./checked";
 
 interface Props {
   query: {
@@ -23,6 +24,12 @@ function CardDetail({ query, data }: Props) {
         />
       </div>
       <div className="card-right" data-noclosecard="true">
+        <Checked
+          character={data}
+          className="character-checked-change"
+          title="Select"
+          idPrefix="card"
+        />
         <NavLink
           className="button card-button-close"
           to={`?page=${query.page}&search=${query.search}&details=0`}
