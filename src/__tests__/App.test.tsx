@@ -1,31 +1,26 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "./test-utils/test-utils";
 import {
   describe,
   it,
   vi,
-  expect,
   afterAll,
-  afterEach,
   beforeAll,
+  afterEach,
+  expect,
 } from "vitest";
 import { http, HttpResponse, delay } from "msw";
 import { setupServer } from "msw/node";
-import { MockCharacters } from "./mockData";
-import MyApp from "../pages/_app";
-import IndexPage from "../pages/index";
-import { Router } from "next/router";
+import { MockCharacters } from "./test-utils/mockData";
+import Page from "../app/page";
+
+const searchParams = {
+  search: "",
+  page: "1",
+  details: "",
+};
 
 const mockCharacter = MockCharacters[0];
 const PeopleAnswer = { count: 2, results: MockCharacters };
-const mockRepo = {
-  query: {
-    search: "",
-    page: "1",
-    details: "",
-  },
-  people: MockCharacters,
-  totalItem: 2,
-};
 
 const handlers = [
   http.get("https://swapi.dev/api/people/", async () => {
@@ -42,46 +37,42 @@ const server = setupServer(...handlers);
 
 beforeAll(() => {
   server.listen();
-  vi.mock("next/router", () => require("next-router-mock"));
 });
 
 afterEach(() => server.resetHandlers());
 
 afterAll(() => server.close());
 
-const mockNavigate = vi.fn();
-
-vi.mock("", async () => {
-  const actual = await vi.importActual("");
+vi.mock("next/navigation", async () => {
+  const actual = await vi.importActual("next/navigation");
   return {
     ...actual,
-    useNavigate: () => mockNavigate,
+    useRouter: vi.fn(() => ({
+      push: vi.fn(),
+      replace: vi.fn(),
+    })),
+    useSearchParams: vi.fn(() => ({
+      get: vi.fn(),
+    })),
+    usePathname: vi.fn(),
   };
 });
 
 describe("App", () => {
   it("renders the page Header", async () => {
-    render(
-      <MyApp
-        pageProps={undefined}
-        Component={() => <IndexPage repo={mockRepo} />}
-        router={{} as Router}
-      />,
-    );
+    const nextApp = document.createElement("div");
+    document.body.appendChild(nextApp);
+    render(await Page({ searchParams: searchParams }), { container: nextApp });
 
     expect(
-      await screen.findByText("Search for Star Wars person or character"),
+      screen.queryByText(/Search for Star Wars person or character/i),
     ).toBeInTheDocument();
   });
 
   it("renders the page and includes the Search component", async () => {
-    render(
-      <MyApp
-        pageProps={undefined}
-        Component={() => <IndexPage repo={mockRepo} />}
-        router={{} as Router}
-      />,
-    );
+    const nextApp = document.createElement("div");
+    document.body.appendChild(nextApp);
+    render(await Page({ searchParams: searchParams }), { container: nextApp });
 
     expect(await screen.findByTestId("search-query-input")).toBeInTheDocument();
   });

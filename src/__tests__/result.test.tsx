@@ -1,13 +1,26 @@
 import { render, screen } from "./test-utils/test-utils";
 import { describe, it, vi, expect } from "vitest";
-import Card from "../components/card/card";
 import { MockCharacters } from "./test-utils/mockData";
+import Result from "../components/result/result";
 
-const mockCharacter = MockCharacters[0];
-const mockQuery = {
-  search: "",
-  page: "1",
-  details: "11",
+const mockRepoEmpty = {
+  query: {
+    search: "",
+    page: "1",
+    details: "",
+  },
+  people: [],
+  totalItem: 2,
+};
+
+const mockRepo = {
+  query: {
+    search: "",
+    page: "1",
+    details: "11",
+  },
+  people: MockCharacters,
+  totalItem: 2,
 };
 
 vi.mock("next/navigation", async () => {
@@ -26,14 +39,23 @@ vi.mock("next/navigation", async () => {
 });
 
 describe("Card", () => {
-  it("renders loaded Card", async () => {
+  it("renders empty result", async () => {
     const nextApp = document.createElement("div");
     document.body.appendChild(nextApp);
-    render(<Card data={mockCharacter} query={mockQuery} />, {
+    render(<Result {...mockRepoEmpty} />, {
       container: nextApp,
     });
 
-    expect(await screen.findByText(mockCharacter.name)).toBeInTheDocument();
+    expect(await screen.findByText(/Result is empty/)).toBeInTheDocument();
+  });
+
+  it("renders details", async () => {
+    const nextApp = document.createElement("div");
+    document.body.appendChild(nextApp);
+    render(<Result {...mockRepo} />, {
+      container: nextApp,
+    });
+
     expect(screen.getByAltText("character")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /X/i })).toBeInTheDocument();
   });

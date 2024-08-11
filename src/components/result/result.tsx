@@ -3,9 +3,15 @@ import Pagination from "../pagination/pagination";
 import Link from "next/link";
 import { FetchResult } from "../../api/swapiTypes";
 import Card from "../card/card";
+import { LoaderContext } from "../../features/loader-provider";
+import { useContext } from "react";
 
 const Result = ({ query, people, totalItem }: FetchResult) => {
-  if (!people.length)
+  const { spinnerRef } = useContext(LoaderContext);
+  if (spinnerRef && spinnerRef.current)
+    spinnerRef.current.dataset.hide = "true";
+
+  if (!people.length) {
     return (
       <div className="search-result-empty">
         <p>
@@ -16,6 +22,7 @@ const Result = ({ query, people, totalItem }: FetchResult) => {
         </p>
       </div>
     );
+  }
 
   let detail = undefined;
   if (query.details) {

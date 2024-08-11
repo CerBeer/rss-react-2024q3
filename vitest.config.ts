@@ -13,7 +13,7 @@ export default
           ...configDefaults.exclude,
           '.eslintrc.cjs',
           'src/__tests__/*',
-          '_previous/*',
+          'src/app/layout.tsx',
           'next.config.mjs'
         ],
       },

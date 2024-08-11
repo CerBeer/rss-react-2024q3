@@ -1,5 +1,5 @@
 {
-  "name": "react-routing-tests",
+  "name": "ssr-app-api",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -13,7 +13,7 @@
     "lint:fix": "eslint src/ --ext js,ts,tsx --fix",
     "lint:staged": "lint-staged",
     "test": "npx vitest src/ --run --coverage",
-    "test:run": "vitest src/ --run",
+    "test:run": "cls && vitest src/ --run",
     "test:coverage": "npx vitest src/ --coverage",
     "prepare": "husky install",
     "pp": "npm run format:fix && npm run lint:fix && npm run test"
