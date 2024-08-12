@@ -1,0 +1,63 @@
+import { CharacterRecord } from "../api/swapiTypes";
+import { SWApi } from "../api/swapiConst";
+import { NavLink } from "@remix-run/react";
+import Checked from "./checked";
+
+interface Props {
+  query: {
+    search: string;
+    page: string;
+    details: string;
+  };
+  data: CharacterRecord;
+}
+
+function CardDetail({ query, data }: Props) {
+  return (
+    <div className="card" data-noclosecard="true">
+      <div className="card-left" data-noclosecard="true">
+        <img
+          src={`${SWApi.IMG_URL_BASE}${data.id}.jpg`}
+          alt="character"
+          data-noclosecard="true"
+          className="card-left-img"
+        />
+      </div>
+      <div className="card-right" data-noclosecard="true">
+        <Checked
+          character={data}
+          className="character-checked-change"
+          title="Select"
+          idPrefix="card"
+        />
+        <NavLink
+          className="button card-button-close"
+          to={`?page=${query.page}&search=${query.search}&details=0`}
+        >
+          X
+        </NavLink>
+        <div className="card-line card-name" data-noclosecard="true">
+          {data.name}
+        </div>
+        <div className="card-line card-gender" data-noclosecard="true">
+          gender: {data.gender}
+        </div>
+        <div className="card-line card-birth-year" data-noclosecard="true">
+          birth year: {data.birth_year}
+        </div>
+        <div className="card-line card-height" data-noclosecard="true">
+          height: {data.height}
+        </div>
+        <div className="card-line card-mass" data-noclosecard="true">
+          mass: {data.mass}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Card({ query, data }: Props) {
+  return <CardDetail data={data} query={query} />;
+}
+
+export default Card;
