@@ -1,12 +1,10 @@
-import Page from "../page";
+import Wrapper from "../wrapper";
 
 function Regular() {
   return (
-    <Page>
-      <div className="regular" data-testid="regular">
-        Regular Forms
-      </div>
-    </Page>
+    <Wrapper>
+      <div className="regular">Regular Forms</div>
+    </Wrapper>
   );
 }
 

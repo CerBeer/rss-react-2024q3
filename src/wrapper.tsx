@@ -1,4 +1,4 @@
-import "./page.css";
+import "./wrapper.css";
 import Header from "./components/header";
 import Footer from "./components/footer";
 
@@ -6,9 +6,9 @@ interface Props {
   children: React.ReactNode;
 }
 
-function Page({ children }: Props) {
+function Wrapper({ children }: Props) {
   return (
-    <div className="root-element" data-testid="root-element">
+    <div className="root-element">
       <Header />
       {children}
       <Footer />
@@ -16,4 +16,4 @@ function Page({ children }: Props) {
   );
 }
 
-export default Page;
+export default Wrapper;

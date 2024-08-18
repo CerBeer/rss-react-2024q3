@@ -1,9 +1,5 @@
 function Footer() {
-  return (
-    <div className="footer" data-testid="footer">
-      Footer
-    </div>
-  );
+  return <div className="footer">RS School. React 2024 Q3</div>;
 }
 
 export default Footer;

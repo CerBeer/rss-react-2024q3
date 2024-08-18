@@ -1,12 +1,10 @@
-import Page from "../page";
+import Wrapper from "../wrapper";
 
 function Controlled() {
   return (
-    <Page>
-      <div className="controlled" data-testid="controlled">
-        Controlled Forms
-      </div>
-    </Page>
+    <Wrapper>
+      <div className="controlled">Controlled Forms</div>
+    </Wrapper>
   );
 }
 

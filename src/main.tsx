@@ -6,8 +6,8 @@ import store from "./redux/store/store";
 import Submits from "./pages/submits";
 import Regular from "./pages/regular";
 import Controlled from "./pages/controlled";
-import ErrorPage from "./errorPage";
-import "./index.css";
+import NotFound from "./pages/notFound";
+import "./main.css";
 
 const rootElement = document.getElementById("root")!;
 ReactDOM.createRoot(rootElement).render(
@@ -18,7 +18,7 @@ ReactDOM.createRoot(rootElement).render(
           <Route path="/" element={<Submits />} />
           <Route path="/regular" element={<Regular />} />
           <Route path="/controlled" element={<Controlled />} />
-          <Route path="*" element={<ErrorPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </Provider>
