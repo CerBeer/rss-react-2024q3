@@ -9,10 +9,10 @@ function Header() {
       </div>
       <nav className="navigation">
         <NavLink to="/regular" className="link">
-          Regular Forms
+          Regular Form
         </NavLink>
         <NavLink to="/controlled" className="link">
-          Controlled Forms
+          Controlled Form
         </NavLink>
         <NavLink to="/" className="link">
           Home

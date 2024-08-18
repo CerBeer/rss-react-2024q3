@@ -14,8 +14,8 @@
   --a-hover-color: #747bff;
   --button-background-color: #e7e7e7;
   --button-hover-border-color: #646cff;
-  --error-boundary-color: #ff8a8a;
-  --error-boundary-body-color: #444444;
+  --error-color: #ff8a8a;
+  --error-body-color: #444444;
   --border-color: #bbbbbb;
   --box-shadow-color: #d0d0d0;
   --link-color: #808080;
@@ -63,4 +63,8 @@ h1 {
   font-size: 2.2em;
   line-height: 1.1;
   margin: 10px auto;
+}
+
+h2 {
+  margin: 20px;
 }

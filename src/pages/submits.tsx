@@ -1,9 +1,10 @@
+import Items from "../components/items";
 import Page from "../wrapper";
 
 function Submits() {
   return (
     <Page>
-      <div className="submits">Submits</div>
+      <Items />
     </Page>
   );
 }
