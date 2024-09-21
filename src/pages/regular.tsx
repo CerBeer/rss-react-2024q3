@@ -182,7 +182,7 @@ function Regular() {
                 id="country"
                 list="countrydata"
                 ref={countryRef}
-                size={50}
+                size={10}
                 autoComplete="off"
                 placeholder="country"
                 className="input-text"

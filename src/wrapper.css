@@ -104,4 +104,5 @@ label,
 
 .submit {
   font-size: larger;
+  cursor: pointer;
 }
