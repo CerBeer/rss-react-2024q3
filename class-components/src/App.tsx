@@ -44,9 +44,7 @@ class App extends Component<Props, State> {
     return (
       <ErrorBoundary>
         <ErrorButton />
-        <div className="title">
-          <h1>{title}</h1>
-        </div>
+        <h1>{title}</h1>
         <SearchInput handle={this.handleSearchClick} />
         {nowQuery ? <Spinner /> : <Result people={people} />}
       </ErrorBoundary>
