@@ -31,7 +31,10 @@ function Controlled() {
   const onSubmit: SubmitHandler<IFormDataYup> = (data) => {
     const valueFields = data;
     const reader = new FileReader();
-    reader.readAsDataURL(valueFields.image);
+    // console.log({ image: valueFields.image });
+    const imageList = valueFields.image as unknown as FileList;
+    const imagePath = imageList.length ? imageList[0] : new File([""], "");
+    reader.readAsDataURL(imagePath);
     reader.onloadend = function () {
       const image = reader.result?.toString();
 
